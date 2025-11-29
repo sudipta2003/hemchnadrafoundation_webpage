@@ -10,7 +10,12 @@ const scene = new THREE.Scene();
     renderer.setPixelRatio(window.devicePixelRatio);
     document.getElementById("canvas-container").appendChild(renderer.domElement);
 
-    camera.position.z = 2;
+    // Calculate camera distance to fit sphere perfectly
+    const vFOW = camera.fov * Math.PI / 180; // Convert vertical FOV to radians
+    const height = 2 * Math.tan(vFOW / 2) * 2; // Sphere radius is 1, so multiply by 2
+    const distance = height / (2 * Math.tan(vFOW / 2));
+    const minZoomDistance = distance * 0.85; // Set default to minZoom
+    camera.position.z = minZoomDistance;
 
     // === Earth Setup ===
     const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -150,6 +155,10 @@ const scene = new THREE.Scene();
     const indiaOverlay = new THREE.Mesh(geometry, overlayMaterial);
     scene.add(indiaOverlay);
 
+    // Rotate earth down
+    earth.rotation.x = 0.45;
+    indiaOverlay.rotation.copy(earth.rotation);
+
     const atmosphere = new THREE.Mesh(
       new THREE.SphereGeometry(1.02, 64, 64),
       new THREE.MeshBasicMaterial({
@@ -168,15 +177,31 @@ const scene = new THREE.Scene();
 
     // === Controls ===
     let isDragging = false;
+    let isHoveringOverEarth = false;
     let previousMousePosition = { x: 0, y: 0 };
     const rotationSpeed = 0.002;
 
-    renderer.domElement.addEventListener("mousedown", (event) => {
-      isDragging = true;
-      previousMousePosition = { x: event.clientX, y: event.clientY };
-    });
+    // Raycaster for detecting hover over earth object
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const baseDistance = minZoomDistance;
+    const minZoom = baseDistance * 0.8;
+    const maxZoom = minZoomDistance;
 
-    document.addEventListener("mousemove", (event) => {
+    // Detect hover over 3D earth object
+    renderer.domElement.addEventListener("mousemove", (event) => {
+      // Calculate mouse position in normalized device coordinates
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      // Update raycaster
+      raycaster.setFromCamera(mouse, camera);
+
+      // Check intersections with earth
+      const intersects = raycaster.intersectObjects([earth, indiaOverlay, atmosphere]);
+      isHoveringOverEarth = intersects.length > 0;
+
       if (!isDragging) return;
       const deltaX = event.clientX - previousMousePosition.x;
       const deltaY = event.clientY - previousMousePosition.y;
@@ -187,14 +212,22 @@ const scene = new THREE.Scene();
       previousMousePosition = { x: event.clientX, y: event.clientY };
     });
 
+    renderer.domElement.addEventListener("mousedown", (event) => {
+      if (isHoveringOverEarth) {
+        isDragging = true;
+        previousMousePosition = { x: event.clientX, y: event.clientY };
+      }
+    });
+
     document.addEventListener("mouseup", () => (isDragging = false));
 
-    document.addEventListener(
+    renderer.domElement.addEventListener(
       "wheel",
       (e) => {
+        if (!isHoveringOverEarth) return;
         e.preventDefault();
-        camera.position.z += e.deltaY * 0.001;
-        camera.position.z = Math.max(1.2, Math.min(4, camera.position.z));
+        camera.position.z += e.deltaY * 0.002;
+        camera.position.z = Math.max(minZoom, Math.min(maxZoom, camera.position.z));
       },
       { passive: false }
     );

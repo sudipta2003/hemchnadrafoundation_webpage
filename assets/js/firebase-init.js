@@ -20,7 +20,7 @@ const firebaseConfig = {
  apiKey: "AIzaSyCA-qzbLYL3nf6EpiMAJf7g5qJ2XyY6Be4",
   authDomain: "hemchandra-foundation.firebaseapp.com",
   projectId: "hemchandra-foundation",
-  storageBucket: "hemchandra-foundation.firebasestorage.app",
+  storageBucket: "hemchandra-foundation.appspot.com",
   messagingSenderId: "1044241898866",
   appId: "1:1044241898866:web:32e876eb747b17399611eb",
   measurementId: "G-S1JWK5Y9VQ"
@@ -29,7 +29,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Use Firestore with a specific database ('alldata')
+import { initializeFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+const db = getFirestore(app, "alldata");
 
 // Expose a tiny helper API for quick testing from the browser console.
 // Usage examples (open DevTools -> Console):
@@ -38,21 +40,5 @@ const db = getFirestore(app);
 
 window.db = db;
 
-window.addMessage = async function (name, text) {
-  if (!name || !text) throw new Error('name and text are required');
-  const ref = await addDoc(collection(db, 'messages'), {
-    name,
-    text,
-    created: serverTimestamp(),
-  });
-  return ref.id;
-};
 
-window.getMessages = async function () {
-  const q = query(collection(db, 'messages'), orderBy('created', 'desc'));
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-};
 
-// Optional: inform in console that firebase-init loaded (helps with quick verification)
-console.info('Firebase init module loaded. Replace firebaseConfig with your project config.');

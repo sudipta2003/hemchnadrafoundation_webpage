@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Events | Hemchandra Foundation</title>
+    <link rel="stylesheet" href="eventstyle.css">
+</head>
+<body>
+    <h1>All Events</h1>
+    <div id="events-grid"></div>
+    <script type="module" src="../assets/js/firebase-init.js"></script>
+    <script type="module">
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        const db = window.db;
+        async function fetchEvents() {
+            const eventsCol = collection(db, "events");
+            const q = query(eventsCol, orderBy("date", "desc"));
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        }
+        function renderEvents(events) {
+            const grid = document.getElementById("events-grid");
+            if (!events.length) {
+                grid.innerHTML = '<p>No events found.</p>';
+                return;
+            }
+            grid.innerHTML = events.map(event => `
+                <a href="event-details.html?id=${event.id}" class="event-card-link">
+                    <div class="event-card">
+                        <img src="${event.image || '../images/default-event.jpg'}" alt="${event.title || 'Event Image'}">
+                        <h2>${event.title || "Untitled Event"}</h2>
+                    </div>
+                </a>
+            `).join("");
+        }
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const events = await fetchEvents();
+                renderEvents(events);
+            } catch (err) {
+                document.getElementById("events-grid").innerHTML = `<p style="color:red">Failed to load events: ${err.message}</p>`;
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>

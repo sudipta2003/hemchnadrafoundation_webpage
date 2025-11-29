@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details | Hemchandra Foundation</title>
+    <link rel="stylesheet" href="eventstyle.css">
+    <style>
+        #event-details-container {
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+            padding: 0 10px;
+        }
+        .event-title {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 18px 0 18px 0;
+        }
+        .event-image-frame {
+            width: 100%;
+            max-width: 100%;
+            height: 350px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 0 auto 18px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        .event-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+        .event-time {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .event-description {
+            font-size: 1.15em;
+            margin-top: 10px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div id="event-details-container">
+        <!-- Event details will be loaded here -->
+    </div>
+    <script type="module" src="../assets/js/firebase-init.js"></script>
+    <script type="module">
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        const db = window.db;
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        async function loadEvent() {
+            const eventId = getQueryParam('id');
+            const container = document.getElementById('event-details-container');
+            if (!eventId) {
+                container.innerHTML = '<p style="text-align:center;color:red">Event not found.</p>';
+                return;
+            }
+            const eventRef = doc(db, "events", eventId);
+            const eventSnap = await getDoc(eventRef);
+            if (!eventSnap.exists()) {
+                container.innerHTML = '<p style="text-align:center;color:red">Event not found.</p>';
+                return;
+            }
+            const event = eventSnap.data();
+            container.innerHTML = `
+                <div class="event-title">${event.title || 'Untitled Event'}</div>
+                <div class="event-image-frame">
+                    <img src="${event.image || '../images/default-event.jpg'}" alt="${event.title || 'Event Image'}" />
+                </div>
+                <div class="event-description">${event.description || 'No description.'}</div>
+                <div class="event-time"><strong>Date:</strong> ${event.date || 'Unknown'}</div>
+            `;
+        }
+        document.addEventListener('DOMContentLoaded', loadEvent);
+    </script>
+</body>
+</html>

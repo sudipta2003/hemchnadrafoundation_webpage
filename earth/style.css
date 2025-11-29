@@ -22,7 +22,6 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    color: #fff;
     z-index: 10;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
