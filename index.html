@@ -11,6 +11,169 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="events/eventstyle.css" />
+		<style>
+			html {
+				scroll-behavior: smooth;
+			}
+			@keyframes slideInFromLeft {
+				from {
+					opacity: 0;
+					transform: translateX(-100px);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+			.slide-in-from-left {
+				animation: slideInFromLeft 0.6s ease-out forwards;
+			}
+			@keyframes slideUpAndFadeOut {
+				from {
+					opacity: 1;
+					transform: translateY(0);
+				}
+				to {
+					opacity: 0;
+					transform: translateY(-50px);
+				}
+			}
+			@keyframes slideUpAndFadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(50px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.slide-up-fade-out {
+				animation: slideUpAndFadeOut 0.5s ease-out forwards;
+			}
+			.slide-up-fade-in {
+				animation: slideUpAndFadeIn 0.5s ease-out forwards;
+			}
+			@keyframes bookSlideIn {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			@keyframes bookScrollLeft {
+				from {
+					opacity: 0;
+					transform: translateX(100px);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+			@keyframes bookScrollOut {
+				from {
+					opacity: 1;
+					transform: translateX(0);
+				}
+				to {
+					opacity: 0;
+					transform: translateX(-100px);
+				}
+			}
+			.book-card {
+				animation: bookScrollLeft 0.8s ease-out forwards;
+				opacity: 0;
+			}
+			.book-card.exit {
+				animation: bookScrollOut 0.8s ease-out forwards !important;
+			}
+			#books-container {
+				display: flex !important;
+				justify-content: center;
+				gap: 20px;
+				min-height: 280px;
+				flex-wrap: nowrap;
+				overflow: hidden;
+			}
+			/* Modal Styles */
+			.book-modal {
+				display: none;
+				position: fixed;
+				z-index: 1000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.8);
+				animation: fadeIn 0.3s ease-out;
+			}
+			.book-modal.show {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			.modal-content {
+				background-color: white;
+				padding: 30px;
+				border-radius: 8px;
+				max-width: 500px;
+				width: 90%;
+				text-align: center;
+				animation: slideUp 0.3s ease-out;
+				position: relative;
+			}
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(50px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.modal-close {
+				position: absolute;
+				top: 15px;
+				right: 20px;
+				font-size: 28px;
+				font-weight: bold;
+				color: #999;
+				cursor: pointer;
+				transition: color 0.3s ease;
+			}
+			.modal-close:hover {
+				color: #000;
+			}
+			.modal-image {
+				width: 100%;
+				max-width: 300px;
+				height: auto;
+				border-radius: 4px;
+				margin: 0 auto 25px auto;
+				display: block;
+			}
+			.modal-title {
+				font-size: 1.3em;
+				color: #2c3e50;
+				margin: 0;
+				padding-top: 15px;
+				border-top: 1px solid #eee;
+				font-weight: 600;
+			}
+		
+		
+		
+		</style>
+		</style>
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -36,8 +199,8 @@
 											<ul>
 												<li class="current_page_item"><a href="index.html">Home</a></li>
 												<li><a href="#events-section">Events</a></li>
-												<li><a href="#">ABCD</a></li>
-												<li><a href="#">Archives</a></li>
+												<li><a href="#recent-activities">Activity</a></li>
+												<li><a href="#books-section">Books</a></li>
 												<li><a href="donation/index.html" class="button small icon solid fa-heart">Donate Now</a></li>
 											</ul>
 										</nav>
@@ -69,11 +232,11 @@
 				<div class="wrapper style1">
 					
 					<div class="inner">							<!-- Feature 1 -->
-								<section class="container box feature1" id="events-section">
+								<section class="container box feature1" id="events-section" style="padding-top: 10px; padding: 10px;">
 									<div class="row">
 										<div class="col-12">
 											<header class="first major">
-												<h2>Recent Events</h2>
+												<h2 style="margin-top: 20px;">Recent Events</h2>
 											</header>
 										</div>
 										<div class="col-12">
@@ -82,6 +245,26 @@
 									</div>
 								</section>
 
+						</div>
+					</div>
+					<div class="wrapper style3">
+						<div class="inner">
+							<div class="container">
+								<div class="row">
+									<div class="col-12" style="display: flex; justify-content: center;">
+										<div style="width: 100%; max-width: 900px;">
+
+											<!-- Article list -->
+												<section class="box article-list" id="recent-activities">
+													<h2 class="icon fa-file-alt" style="text-align: center;">Recent Activity</h2>
+
+
+
+												</section>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="wrapper style2">
@@ -93,119 +276,44 @@
 										<div class="col-6 col-12-medium">
 											<section>
 												<header class="major">
-													<h2>And this is a subheading</h2>
-													<p>It’s important but clearly not *that* important</p>
-												</header>
-												<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-												Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-												Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-												consequat etiam.</p>
-												<footer>
-													<a href="#" class="button medium icon solid fa-arrow-circle-right">Let's do this</a>
+												<h2>YouTube</h2>
+												<p>Watch our latest videos and content</p>
+											</header>
+											<iframe width="100%" height="315" src="https://www.youtube.com/embed/mM6d1obHEFQ?si=sGC2qlFT9noDAQXZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+											<p style="margin-top: 15px;">Subscribe to our YouTube channel to stay updated with our latest videos, documentaries, and educational content about Pandit Hemchandra Goswami and his contributions to Assam's cultural heritage.</p>
+											<footer>
+												<a href="https://youtube.com/@hemchandragoswamifoundation?si=_6HoYRiqOLwd7cPT" class="button medium icon solid fa-youtube" target="_blank" rel="noopener noreferrer">Visit our Channel</a>
 												</footer>
 											</section>
 										</div>
 										<div class="col-6 col-12-medium">
-											<section>
+											<section id="books-section">
 												<header class="major">
-													<h2>This is also a subheading</h2>
-													<p>And is as unimportant as the other one</p>
+													<h2>Books</h2>
+													<p>Explore our collection of publications</p>
 												</header>
-												<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-												Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-												Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-												consequat etiam.</p>
-												<footer>
-													<a href="#" class="button medium alt icon solid fa-info-circle">Wait, what?</a>
-												</footer>
+												<div id="books-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; margin-top: 20px;">
+													<div style="text-align: center; padding: 20px; color: #999;">Loading books...</div>
+												</div>
+												<p style="margin-top: 30px; text-align: center; color: #666; font-size: 0.95em;">Discover our complete collection of publications exploring the life, teachings, and legacy of Pandit Hemchandra Goswami. Each book offers unique insights into his contributions to Assamese culture and philosophy.</p>
+												<div style="text-align: center; margin-top: 20px;">
+													<a href="BOOKS/books.html" class="button medium icon solid fa-book">View All Books</a>
+												</div>
 											</section>
+										</div>
+
+										<!-- Book Modal -->
+										<div id="bookModal" class="book-modal">
+											<div class="modal-content">
+												<span class="modal-close">&times;</span>
+												<img id="modalImage" class="modal-image" src="" alt="">
+												<h2 id="modalTitle" class="modal-title"></h2>
+											</div>
 										</div>
 									</div>
 								</section>
 
 							</div>
-					</div>
-					<div class="wrapper style3">
-						<div class="inner">
-							<div class="container">
-								<div class="row">
-									<div class="col-8 col-12-medium">
-
-										<!-- Article list -->
-											<section class="box article-list">
-												<h2 class="icon fa-file-alt">Recent Posts</h2>
-
-												<!-- Excerpt -->
-													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
-														<div>
-															<header>
-																<span class="date">July 24</span>
-																<h3><a href="#">Repairing a hyperspace window</a></h3>
-															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-														</div>
-													</article>
-
-												<!-- Excerpt -->
-													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic05.jpg" alt="" /></a>
-														<div>
-															<header>
-																<span class="date">July 18</span>
-																<h3><a href="#">Adventuring with a knee injury</a></h3>
-															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-														</div>
-													</article>
-
-												<!-- Excerpt -->
-													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic06.jpg" alt="" /></a>
-														<div>
-															<header>
-																<span class="date">July 14</span>
-																<h3><a href="#">Preparing for Y2K38</a></h3>
-															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-														</div>
-													</article>
-
-											</section>
-									</div>
-									<div class="col-4 col-12-medium">
-
-										<!-- Spotlight -->
-											<section class="box spotlight">
-												<h2 class="icon fa-file-alt">Spotlight</h2>
-												<article>
-													<a href="#" class="image featured"><img src="images/pic07.jpg" alt=""></a>
-													<header>
-														<h3><a href="#">Neural Implants</a></h3>
-														<p>The pros and cons. Mostly cons.</p>
-													</header>
-													<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper mod
-													quisturpis nisi consequat ornare in, hendrerit in lectus semper mod quis eget mi quat etiam
-													lorem. Phasellus quam turpis, feugiat sed et lorem ipsum dolor consequat dolor feugiat sed
-													et tempus consequat etiam.</p>
-													<p>Lorem ipsum dolor quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper
-													mod quisturpis nisi consequat etiam lorem sed amet quam turpis.</p>
-													<footer>
-														<a href="#" class="button alt icon solid fa-file-alt">Continue Reading</a>
-													</footer>
-												</article>
-											</section>
-
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -331,6 +439,151 @@
 			     firebaseConfig with your project's real values from the Firebase console. -->
 			<script type="module" src="assets/js/firebase-init.js"></script>
 			<script type="module" src="events/eventjss.js"></script>
+			<script type="module" src="assets/js/activities.js"></script>
+
+			<script type="module">
+				import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+				const BOOKS_COLLECTION = "books";
+				let allBooks = [];
+				let currentIndex = 0;
+				const BOOKS_PER_PAGE = 3;
+				const CAROUSEL_INTERVAL = 4000; // Change books every 4 seconds
+				
+				// Wait for Firebase to initialize
+				let db = window.db;
+				if (!db && window.firebase && window.firebase.firestore) {
+					db = getFirestore();
+				}
+
+				function createBookHTML(book, delayIndex) {
+					const coverUrl = book.coverUrl || 'https://via.placeholder.com/150x200?text=No+Cover';
+					const delay = delayIndex * 0.2; // Stagger delay for smooth one-by-one effect
+					const bookId = Math.random().toString(36).substr(2, 9); // Generate unique ID
+					return `
+						<div class="book-card" style="text-align: center; cursor: pointer; transition: transform 0.3s ease; animation-delay: ${delay}s; flex: 0 0 150px; min-width: 150px;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" data-book-id="${bookId}" data-title="${book.title || 'N/A'}" data-image="${coverUrl}">
+							<img src="${coverUrl}" alt="${book.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+						</div>
+					`;
+				}
+
+				function displayBooks() {
+					const booksContainer = document.getElementById('books-container');
+					if (allBooks.length === 0) return;
+
+					// Get the books to display
+					const booksToShow = [];
+					for (let i = 0; i < BOOKS_PER_PAGE; i++) {
+						booksToShow.push(allBooks[(currentIndex + i) % allBooks.length]);
+					}
+
+					// Clear and update with animation
+					booksContainer.innerHTML = '';
+					booksToShow.forEach((book, index) => {
+						booksContainer.innerHTML += createBookHTML(book, index);
+					});
+
+					// Add click handlers to all book cards
+					document.querySelectorAll('.book-card').forEach(card => {
+						card.addEventListener('click', function() {
+							openBookModal(this.dataset.image, this.dataset.title);
+						});
+					});
+				}
+
+				function openBookModal(imageSrc, title) {
+					const modal = document.getElementById('bookModal');
+					const modalImage = document.getElementById('modalImage');
+					const modalTitle = document.getElementById('modalTitle');
+
+					modalImage.src = imageSrc;
+					modalTitle.textContent = title;
+					modal.classList.add('show');
+				}
+
+				function closeBookModal() {
+					const modal = document.getElementById('bookModal');
+					modal.classList.remove('show');
+				}
+
+				// Close modal when clicking the X
+				document.querySelector('.modal-close').addEventListener('click', closeBookModal);
+
+				// Close modal when clicking outside the content
+				document.getElementById('bookModal').addEventListener('click', function(e) {
+					if (e.target === this) {
+						closeBookModal();
+					}
+				});
+
+				// Close modal with Escape key
+				document.addEventListener('keydown', function(e) {
+					if (e.key === 'Escape') {
+						closeBookModal();
+					}
+				});
+
+				function rotateBooks() {
+					const booksContainer = document.getElementById('books-container');
+					const cards = booksContainer.querySelectorAll('.book-card');
+
+					// Add exit animation
+					cards.forEach(card => {
+						card.classList.add('exit');
+					});
+
+					// Change books after animation completes
+					setTimeout(() => {
+						currentIndex = (currentIndex + BOOKS_PER_PAGE) % allBooks.length;
+						displayBooks();
+					}, 800);
+				}
+
+				async function loadBooks() {
+					try {
+						// Ensure db is initialized
+						if (!db) {
+							db = window.db;
+						}
+						if (!db) {
+							setTimeout(loadBooks, 500); // Retry after 500ms
+							return;
+						}
+						
+						const booksCol = collection(db, BOOKS_COLLECTION);
+						const q = query(booksCol, orderBy("createdAt", "desc"));
+						const snapshot = await getDocs(q);
+
+						const booksContainer = document.getElementById('books-container');
+						
+						if (snapshot.empty) {
+							booksContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #999;">No books available at the moment.</div>';
+							return;
+						}
+
+						// Store all books
+						allBooks = snapshot.docs.map(docSnap => docSnap.data());
+
+						// Display initial books
+						displayBooks();
+
+						// Auto-rotate books if there are more than 3
+						if (allBooks.length > BOOKS_PER_PAGE) {
+							setInterval(rotateBooks, CAROUSEL_INTERVAL);
+						}
+					} catch (error) {
+						console.error('Error loading books:', error);
+						document.getElementById('books-container').innerHTML = '<div style="color: red; text-align: center;">Error loading books</div>';
+					}
+				}
+
+				// Load books when page is ready
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', loadBooks);
+				} else {
+					loadBooks();
+				}
+			</script>
 
 	</body>
 </html>

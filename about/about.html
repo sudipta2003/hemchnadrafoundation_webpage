@@ -1,23 +1,236 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+<title>About - Hemchandra Goswami Foundation</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../assets/css/main.css" />
+<style>
+#header {
+position: relative;
+overflow: hidden;
+padding: 2em 0;
+background: none;
+}
+#header::before {
+content: "";
+position: absolute;
+inset: 0;
+background: url("/assets/css/images/bg1.jpeg") center center / cover no-repeat;
+filter: blur(20px);
+transform: scale(1.06);
+z-index: 0;
+}
+#header > * {
+position: relative;
+z-index: 1;
+}
+#header::after {
+content: "";
+position: absolute;
+inset: 0;
+background: rgba(0, 0, 0, 0.35);
+z-index: 0.5;
+}
+#header .logo-container {
+position: relative;
+z-index: 1;
+}
+#header .header-title {
+margin-bottom: 30px;
+}
+.page-title {
+text-align: center;
+margin-bottom: 40px;
+}
+.page-title h2 {
+font-size: 2.5em;
+color: #333;
+margin-bottom: 10px;
+padding-top: 1.5em;
+}
+.page-title p {
+font-size: 1.1em;
+color: #666;
+}
+.content-wrapper {
+max-width: 1000px;
+margin: 0 auto 3em;
+padding: 3em 2em 2em 2em;
+background-color: #fff;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+line-height: 1.8;
+}
+.content-wrapper p {
+color: #696969;
+margin-bottom: 1.2em;
+text-align: justify;
+}
+.faq-section {
+max-width: 1000px;
+margin: 3em auto;
+padding: 2em;
+background-color: #fff;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.faq-section h2 {
+color: #404248;
+margin-bottom: 1.5em;
+font-size: 2em;
+}
+.faq-item {
+border-bottom: 1px solid #dbdbdb;
+margin-bottom: 1em;
+}
+.faq-item:last-child {
+border-bottom: none;
+}
+.faq-question {
+padding: 1.2em;
+background-color: #f9f9f9;
+cursor: pointer;
+user-select: none;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: background-color 0.3s ease;
+color: #404248;
+font-weight: bold;
+}
+.faq-question:hover {
+background-color: #f0f0f0;
+}
+.faq-toggle {
+font-size: 1.5em;
+color: #4091bf;
+transition: transform 0.3s ease;
+}
+.faq-toggle.active {
+transform: rotate(180deg);
+}
+.faq-answer {
+padding: 0;
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease, padding 0.3s ease;
+background-color: #fff;
+}
+.faq-answer.active {
+max-height: 500px;
+padding: 1.2em;
+}
+.faq-answer p {
+color: #696969;
+margin: 0;
+}
+</style>
 </head>
-<body>
-    <h1>About Us</h1>
-    <p>The Hemchandra Goswami Foundation is dedicated to preserving, celebrating, and advancing the legacy of one of Assam’s
-    greatest scholars, thinkers, and cultural visionaries. Hemchandra Goswami (1872–1928) devoted his life to the revival 
-    of Assamese language, literature, and heritage during a time of profound upheaval. His pioneering work in historiography,
-    archaeology, manuscript preservation, linguistic research, and literary creation laid the intellectual foundations of
-    modern Assam.
-    Inspired by his unwavering commitment to knowledge, community, and cultural pride, the Foundation seeks to carry his 
-    spirit forward into the future. We work to promote research, restore and archive rare materials, support young scholars 
-    and writers, and foster deeper public awareness of Assam’s rich intellectual and artistic traditions.
-    Through publications, cultural initiatives, educational outreach, and collaborations with institutions and individuals, 
-    we aim to keep Hemchandra Goswami’s ideals alive, rooted in scholarship, guided by integrity, and dedicated to the greater good.
-    The Foundation stands not merely as a memorial, but as a living bridge between Assam’s past and its unfolding future
-    </p>
+<body class="homepage is-preload">
+<div id="page-wrapper">
+<!-- Header -->
+<div id="header-wrapper">
+<div class="container">
+<header id="header">
+<div class="logo-container">
+<div>
+<img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
+<h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+</div>
+</div>
+<div class="inner">
+</div>
+</header>
+</div>
+</div>
+
+<!-- Main Wrapper -->
+<div id="main-wrapper">
+<div class="wrapper style1">
+<div class="inner">
+<section class="container box feature1">
+<div class="page-title">
+<h2>About Us</h2>
+</div>
+<div class="content-wrapper">
+<p>The Hemchandra Goswami Foundation is dedicated to preserving, celebrating, and advancing the legacy of one of Assam's greatest scholars, thinkers, and cultural visionaries. Hemchandra Goswami (1872–1928) devoted his life to the revival of Assamese language, literature, and heritage during a time of profound upheaval. His pioneering work in historiography, archaeology, manuscript preservation, linguistic research, and literary creation laid the intellectual foundations of modern Assam.</p>
+
+<p>Inspired by his unwavering commitment to knowledge, community, and cultural pride, the Foundation seeks to carry his spirit forward into the future. We work to promote research, restore and archive rare materials, support young scholars and writers, and foster deeper public awareness of Assam's rich intellectual and artistic traditions.</p>
+
+<p>Through publications, cultural initiatives, educational outreach, and collaborations with institutions and individuals, we aim to keep Hemchandra Goswami's ideals alive, rooted in scholarship, guided by integrity, and dedicated to the greater good. The Foundation stands not merely as a memorial, but as a living bridge between Assam's past and its unfolding future.</p>
+</div>
+
+<!-- FAQ Section -->
+<div class="faq-section">
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+<span>What is the Hemchandra Goswami Foundation?</span>
+<span class="faq-toggle">▼</span>
+</div>
+<div class="faq-answer">
+<p>The Hemchandra Goswami Foundation is a non-profit organization dedicated to preserving and promoting the legacy of Pandit Hemchandra Goswami, a renowned Assamese scholar, historian, and cultural visionary who lived from 1872 to 1928.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+<span>Who was Hemchandra Goswami?</span>
+<span class="faq-toggle">▼</span>
+</div>
+<div class="faq-answer">
+<p>Hemchandra Goswami (1872–1928) was one of the foremost architects of modern Assamese intellectual history - an extraordinary scholar whose life's work safeguarded the cultural, linguistic and historical foundations of Assam. Born in the spiritual ambience of Gourang Sattra in Golaghat, he grew into a brilliant student, an early leader among Assamese youths in Calcutta, and a passionate advocate for the revival of the Assamese language at a time of profound crisis. His pioneering scholarship shaped the foundations of Assamese literature, historiography and archaeology. Goswami's tireless efforts, from editing Hemkosh to scientifically cataloguing Assamese manuscripts, establishing Assamese in the Calcutta University curriculum, and recovering rare chronicles and artifacts; helped define the modern understanding of Assam's antiquity. A poet of the Romantic age, a reformer of sattra culture, a trusted adviser to eminent scholars, and a nationalist who introduced Gandhi to the depth of Assamese civilisation, he embodied service to language and land. In just 56 years, Hemchandra Goswami carved an enduring legacy. His work remains indispensable, his ideals evergreen, and his contributions foundational to the cultural identity of Assam.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+<span>What does the Foundation do?</span>
+<span class="faq-toggle">▼</span>
+</div>
+<div class="faq-answer">
+<p>We work to promote research, restore and archive rare materials, support young scholars and writers, and foster public awareness of Assam's rich intellectual traditions. Our initiatives include publications, cultural events, educational outreach, and collaborations with academic institutions.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+<span>How can I support the Foundation?</span>
+<span class="faq-toggle">▼</span>
+</div>
+<div class="faq-answer">
+<p>You can support the Foundation through donations, volunteering your time and expertise, contributing to our research initiatives, or partnering with us on cultural and educational projects. Your contribution helps us preserve and promote Assam's rich heritage for future generations.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+<span>Can I get involved as a volunteer?</span>
+<span class="faq-toggle">▼</span>
+</div>
+<div class="faq-answer">
+<p>Yes! We welcome volunteers who are passionate about preserving Assamese culture and heritage. Whether you have skills in research, writing, event organization, or community engagement, we have opportunities for you to contribute meaningfully to our mission.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div id="footer-wrapper">
+</div>
+</div>
+
+<script>
+function toggleFaq(element) {
+const question = element;
+const answer = element.nextElementSibling;
+const toggle = element.querySelector('.faq-toggle');
+
+answer.classList.toggle('active');
+toggle.classList.toggle('active');
+}
+</script>
 </body>
 </html>

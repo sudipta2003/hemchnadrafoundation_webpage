@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<!--
+	Book Gallery - All Books
+-->
+<html>
+	<head>
+		<title>All Books - Pandit Hemchandra Goswami Foundation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			html {
+				scroll-behavior: smooth;
+			}
+			.books-header {
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				color: white;
+				padding: 40px 20px;
+				text-align: center;
+				margin-bottom: 40px;
+			}
+			.books-header h1 {
+				margin: 0 0 10px 0;
+				font-size: 2.5em;
+			}
+			.books-header p {
+				margin: 0;
+				font-size: 1.1em;
+				opacity: 0.9;
+			}
+			.books-container {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+				gap: 30px;
+				padding: 40px 20px;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+			.book-item {
+				background: white;
+				border-radius: 8px;
+				overflow: hidden;
+				box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+				transition: all 0.3s ease;
+				cursor: pointer;
+				animation: fadeInUp 0.6s ease-out forwards;
+				opacity: 0;
+			}
+			.book-item:nth-child(1) { animation-delay: 0.1s; }
+			.book-item:nth-child(2) { animation-delay: 0.2s; }
+			.book-item:nth-child(3) { animation-delay: 0.3s; }
+			.book-item:nth-child(4) { animation-delay: 0.4s; }
+			.book-item:nth-child(5) { animation-delay: 0.5s; }
+			.book-item:nth-child(n+6) { animation-delay: 0.6s; }
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.book-item:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+			}
+			.book-cover {
+				width: 100%;
+				height: 240px;
+				object-fit: cover;
+				display: block;
+			}
+			.book-info {
+				padding: 15px;
+				text-align: center;
+			}
+			.book-title {
+				font-size: 0.95em;
+				color: #2c3e50;
+				margin: 0;
+				font-weight: 600;
+				line-height: 1.4;
+			}
+			.loading {
+				text-align: center;
+				padding: 40px;
+				color: #999;
+				font-size: 1.1em;
+			}
+			.back-button {
+				text-align: center;
+				padding: 30px 20px;
+			}
+			.back-button a {
+				display: inline-block;
+				padding: 12px 30px;
+				background-color: #667eea;
+				color: white;
+				text-decoration: none;
+				border-radius: 4px;
+				transition: background-color 0.3s ease;
+				font-weight: 600;
+			}
+			.back-button a:hover {
+				background-color: #764ba2;
+			}
+			/* Modal Styles */
+			.book-modal {
+				display: none;
+				position: fixed;
+				z-index: 1000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.8);
+				animation: fadeIn 0.3s ease-out;
+			}
+			.book-modal.show {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			.modal-content {
+				background-color: white;
+				padding: 30px;
+				border-radius: 8px;
+				max-width: 500px;
+				width: 90%;
+				text-align: center;
+				animation: slideUp 0.3s ease-out;
+				position: relative;
+			}
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(50px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.modal-close {
+				position: absolute;
+				top: 15px;
+				right: 20px;
+				font-size: 28px;
+				font-weight: bold;
+				color: #999;
+				cursor: pointer;
+				transition: color 0.3s ease;
+			}
+			.modal-close:hover {
+				color: #000;
+			}
+			.modal-image {
+				width: 100%;
+				max-width: 300px;
+				height: auto;
+				border-radius: 4px;
+				margin: 0 auto 25px auto;
+				display: block;
+			}
+			.modal-title {
+				font-size: 1.3em;
+				color: #2c3e50;
+				margin: 0;
+				padding-top: 15px;
+				border-top: 1px solid #eee;
+				font-weight: 600;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<div id="header-wrapper">
+				<div class="container">
+					<header id="header">
+						<div class="logo-container">
+							<div>
+								<img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
+								<h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+							</div>
+						</div>
+						<div class="inner">
+							<nav id="nav">
+								<ul>
+									<li><a href="../index.html">Home</a></li>
+									<li><a href="../index.html#events-section">Events</a></li>
+									<li><a href="../index.html#recent-activities">Activity</a></li>
+									<li class="current_page_item"><a href="#">Books</a></li>
+									<li><a href="../donation/index.html" class="button small icon solid fa-heart">Donate Now</a></li>
+								</ul>
+							</nav>
+						</div>
+					</header>
+				</div>
+			</div>
+
+			<!-- Main Content -->
+			<div id="main-wrapper">
+				<div class="books-header">
+					<h1>Our Book Collection</h1>
+					<p>Explore the complete collection of publications about Pandit Hemchandra Goswami</p>
+				</div>
+
+				<div class="books-container" id="booksGrid">
+					<div class="loading">Loading books...</div>
+				</div>
+
+				<div class="back-button">
+					<a href="../index.html">← Back to Home</a>
+				</div>
+			</div>
+
+			<!-- Book Modal -->
+			<div id="bookModal" class="book-modal">
+				<div class="modal-content">
+					<span class="modal-close">&times;</span>
+					<img id="modalImage" class="modal-image" src="" alt="">
+					<h2 id="modalTitle" class="modal-title"></h2>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/js/browser.min.js"></script>
+		<script src="../assets/js/breakpoints.min.js"></script>
+		<script src="../assets/js/util.js"></script>
+		<script src="../assets/js/main.js"></script>
+
+		<script type="module">
+			import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+			const BOOKS_COLLECTION = "book";
+			
+			// Wait for Firebase to initialize
+			let db = window.db;
+			if (!db && window.firebase && window.firebase.firestore) {
+				db = getFirestore();
+			}
+
+			function createBookCard(book) {
+				const coverUrl = book.coverUrl || 'https://via.placeholder.com/180x240?text=No+Cover';
+				const title = book.title || 'N/A';
+				return `
+					<div class="book-item" data-title="${title}" data-image="${coverUrl}">
+						<img src="${coverUrl}" alt="${title}" class="book-cover">
+						<div class="book-info">
+							<h3 class="book-title">${title}</h3>
+						</div>
+					</div>
+				`;
+			}
+
+			function openBookModal(imageSrc, title) {
+				const modal = document.getElementById('bookModal');
+				const modalImage = document.getElementById('modalImage');
+				const modalTitle = document.getElementById('modalTitle');
+
+				modalImage.src = imageSrc;
+				modalTitle.textContent = title;
+				modal.classList.add('show');
+			}
+
+			function closeBookModal() {
+				const modal = document.getElementById('bookModal');
+				modal.classList.remove('show');
+			}
+
+			// Close modal handlers
+			document.querySelector('.modal-close').addEventListener('click', closeBookModal);
+			document.getElementById('bookModal').addEventListener('click', function(e) {
+				if (e.target === this) {
+					closeBookModal();
+				}
+			});
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape') {
+					closeBookModal();
+				}
+			});
+
+			async function loadAllBooks() {
+				try {
+					// Ensure db is initialized
+					if (!db) {
+						db = window.db;
+					}
+					if (!db) {
+						setTimeout(loadAllBooks, 500); // Retry after 500ms
+						return;
+					}
+					
+					const booksCol = collection(db, BOOKS_COLLECTION);
+					const q = query(booksCol, orderBy("createdAt", "desc"));
+					const snapshot = await getDocs(q);
+
+					const booksGrid = document.getElementById('booksGrid');
+
+					if (snapshot.empty) {
+						booksGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">No books available at the moment.</div>';
+						return;
+					}
+
+					let html = '';
+					snapshot.docs.forEach(docSnap => {
+						const book = docSnap.data();
+						html += createBookCard(book);
+					});
+
+					booksGrid.innerHTML = html;
+
+					// Add click handlers to all book items
+					document.querySelectorAll('.book-item').forEach(item => {
+						item.addEventListener('click', function() {
+							openBookModal(this.dataset.image, this.dataset.title);
+						});
+					});
+				} catch (error) {
+					console.error('Error loading books:', error);
+					document.getElementById('booksGrid').innerHTML = '<div style="grid-column: 1/-1; color: red; text-align: center; padding: 40px;">Error loading books</div>';
+				}
+			}
+
+			// Load books when page is ready
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', loadAllBooks);
+			} else {
+				loadAllBooks();
+			}
+		</script>
+
+	</body>
+</html>

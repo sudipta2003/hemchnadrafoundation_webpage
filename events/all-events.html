@@ -4,42 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Events | Hemchandra Foundation</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="eventstyle.css">
+    <style>
+        #event-grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .events-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 40px 20px;
+        }
+        .event-grid-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #667eea, #764ba2) border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .event-grid-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #764ba2, #667eea) border-box;
+        }
+        .event-grid-card:hover .event-grid-image {
+            transform: scale(1.12);
+        }
+        .event-grid-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.4s ease-in-out;
+        }
+        .event-grid-content {
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0f0ff 100%);
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .event-grid-title {
+            font-size: 1.35em;
+            font-weight: 700;
+            color: #667eea;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .no-events-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 1.1em;
+        }
+        #header {
+            position: relative;
+            overflow: hidden;
+            padding: 2em 0;
+            background: none;
+        }
+        #header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("/assets/css/images/bg1.jpeg") center center / cover no-repeat;
+            filter: blur(20px);
+            transform: scale(1.06);
+            z-index: 0;
+        }
+        #header > * {
+            position: relative;
+            z-index: 1;
+        }
+        #header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 0.5;
+        }
+        #header .logo-container {
+            position: relative;
+            z-index: 1;
+        }
+        #header .header-title {
+            margin-bottom: 30px;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-title h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .page-title p {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .event-grid-image-container {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
 </head>
-<body>
-    <h1>All Events</h1>
-    <div id="events-grid"></div>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <div id="header-wrapper">
+            <div class="container">
+                <header id="header">
+                    <div class="logo-container">
+                        <div>
+                            <img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
+                            <h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+                        </div>
+                    </div>
+                    <div class="inner">
+                    </div>
+                </header>
+            </div>
+        </div>
+
+        <!-- Main Wrapper -->
+        <div id="main-wrapper">
+            <div class="wrapper style1">
+                <div class="inner">
+                    <section class="container box feature1">
+                        <div id="event-grid-container">
+                            <div class="page-title">
+                                <h2>All Events</h2>
+                                <p>Browse through all events organized by the Hemchandra Goswami Foundation</p>
+                            </div>
+                            <div class="events-grid" id="events-grid">
+                                <!-- Events will be loaded here -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div id="footer-wrapper">
+            <div class="container">
+                <footer id="footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="copyright">
+                                <p>&copy; 2024 Pandit Hemchandra Goswami Foundation. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
     <script type="module" src="../assets/js/firebase-init.js"></script>
     <script type="module">
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
         const db = window.db;
+        
         async function fetchEvents() {
             const eventsCol = collection(db, "events");
-            const q = query(eventsCol, orderBy("date", "desc"));
-            const snapshot = await getDocs(q);
+            const snapshot = await getDocs(eventsCol);
             return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         }
+        
         function renderEvents(events) {
             const grid = document.getElementById("events-grid");
             if (!events.length) {
-                grid.innerHTML = '<p>No events found.</p>';
+                grid.innerHTML = '<div class="no-events-message">No events found.</div>';
                 return;
             }
-            grid.innerHTML = events.map(event => `
-                <a href="event-details.html?id=${event.id}" class="event-card-link">
-                    <div class="event-card">
-                        <img src="${event.image || '../images/default-event.jpg'}" alt="${event.title || 'Event Image'}">
-                        <h2>${event.title || "Untitled Event"}</h2>
-                    </div>
-                </a>
-            `).join("");
+            
+            grid.innerHTML = events.map(event => {
+                const titleImage = event.titleImage || '../images/default-event.jpg';
+                
+                return `
+                    <a href="event-details.html?id=${event.id}" class="event-grid-card">
+                        <div class="event-grid-image-container">
+                            <img src="${titleImage}" alt="${event.title || 'Event Image'}" class="event-grid-image" />
+                        </div>
+                        <div class="event-grid-content">
+                            <h3 class="event-grid-title">${event.title || "Untitled Event"}</h3>
+                        </div>
+                    </a>
+                `;
+            }).join("");
         }
+        
         document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const events = await fetchEvents();
                 renderEvents(events);
             } catch (err) {
-                document.getElementById("events-grid").innerHTML = `<p style="color:red">Failed to load events: ${err.message}</p>`;
+                document.getElementById("events-grid").innerHTML = `<div class="no-events-message" style="color:red">Failed to load events: ${err.message}</div>`;
                 console.error(err);
             }
         });

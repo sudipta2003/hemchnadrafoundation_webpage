@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Activities | Hemchandra Foundation</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <style>
+        #header {
+            position: relative;
+            overflow: hidden;
+            padding: 2em 0;
+            background: none;
+        }
+        #header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("/assets/css/images/bg1.jpeg") center center / cover no-repeat;
+            filter: blur(20px);
+            transform: scale(1.06);
+            z-index: 0;
+        }
+        #header > * {
+            position: relative;
+            z-index: 1;
+        }
+        #header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 0.5;
+        }
+        #header .logo-container {
+            position: relative;
+            z-index: 1;
+        }
+        #header .header-title {
+            margin-bottom: 30px;
+        }
+        .activity-container {
+            padding: 3em 0;
+        }
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2em;
+            margin-top: 2em;
+        }
+        .activity-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            filter: brightness(0.85);
+        }
+        .activity-card h3 {
+            color: #05d4e7;
+            margin-top: 0;
+        }
+        .activity-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .activity-date {
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 1em;
+        }
+        .activity-category {
+            display: inline-block;
+            background: #e0f7fa;
+            color: #00838f;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 1em;
+        }
+        @keyframes colorMoveUp {
+            from {
+                background-position: 0 100%;
+            }
+            to {
+                background-position: 0 0;
+            }
+        }
+        .card-colored {
+            border: 3px solid;
+            background-size: 100% 200%;
+            animation: colorMoveUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .card-0 {
+            background: linear-gradient(to top, #e3f2fd, #ffffff);
+            border-color: #05d4e7;
+            background-size: 100% 200%;
+            animation: colorMoveUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .card-1 {
+            background: linear-gradient(to top, #f3e5f5, #ffffff);
+            border-color: #9c27b0;
+            background-size: 100% 200%;
+            animation: colorMoveUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .card-2 {
+            background: linear-gradient(to top, #e8f5e9, #ffffff);
+            border-color: #4caf50;
+            background-size: 100% 200%;
+            animation: colorMoveUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.3s ease;
+        }
+        .modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            display: block;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #05d4e7;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close:hover {
+            color: #0491a8;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slide-up-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slide-up-fade-out {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+        .slide-up-fade-in {
+            animation: slide-up-fade-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+        }
+        .slide-up-fade-out {
+            animation: slide-up-fade-out 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
+        }
+        .card-image {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        h2 {
+            text-align: center;
+            padding: 10px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body class="homepage is-preload">
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="Full size activity image">
+        </div>
+    </div>
+    
+    <div id="page-wrapper">
+        <!-- Header -->
+        <div id="header-wrapper">
+            <div class="container">
+                <header id="header">
+                    <div class="logo-container">
+                        <div>
+                            <img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
+                            <h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+                        </div>
+                    </div>
+                    <div class="inner">
+                    </div>
+                </header>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-wrapper">
+            <div class="wrapper style1">
+                <div class="inner">
+                    <section class="container box">
+                        <h2>All Activities Gallery</h2>
+                        <div class="activity-grid" id="activities-container">
+                            <!-- Activities will be loaded here -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer-wrapper">
+            <div class="container">
+                <footer id="footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <h3>Contact Us</h3>
+                                <ul class="contact">
+                                    <li class="icon solid fa-home">
+                                        Assam, India
+                                    </li>
+                                    <li class="icon solid fa-phone">
+                                        <a href="#">(000) 000-0000</a>
+                                    </li>
+                                    <li class="icon solid fa-envelope">
+                                        <a href="#">info@hemchandra.org</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="copyright">
+                                <ul class="menu">
+                                    <li>&copy; Pandit Hemchandra Goswami Foundation. All rights reserved.</li>
+                                    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script type="module" src="../assets/js/firebase-init.js"></script>
+    
+    <script type="module">
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCA-qzbLYL3nf6EpiMAJf7g5qJ2XyY6Be4",
+            authDomain: "hemchandra-foundation.firebaseapp.com",
+            projectId: "hemchandra-foundation",
+            storageBucket: "gs://hemchandra-foundation.firebasestorage.app",
+            messagingSenderId: "1044241898866",
+            appId: "1:1044241898866:web:32e876eb747b17399611eb",
+            measurementId: "G-S1JWK5Y9VQ"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app, "alldata");
+        
+        // Make functions global for onclick handlers
+        window.openModal = function(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageUrl;
+            modal.classList.add('active');
+        };
+        
+        window.closeModal = function(event) {
+            // Allow closing by clicking the X or outside the modal
+            if (event && event.target !== document.getElementById('imageModal')) {
+                return;
+            }
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        };
+        
+        async function loadAllActivities() {
+            try {
+                const container = document.getElementById('activities-container');
+                
+                const activitiesCol = collection(db, "activities");
+                const q = query(activitiesCol, orderBy("createdAt", "desc"));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No activities found.</p>';
+                    return;
+                }
+                
+                // Get only the first document
+                const firstDoc = snapshot.docs[0];
+                const data = firstDoc.data();
+                const title = data.title || 'Activity';
+                
+                let html = '';
+                const colors = ['#05d4e7', '#9c27b0', '#4caf50'];
+                const bgColors = ['#e3f2fd', '#f3e5f5', '#e8f5e9'];
+                
+                // Display all photos from the first document
+                if (data.photos && data.photos.length > 0) {
+                    data.photos.forEach((photo, index) => {
+                        const imageUrl = photo.imageUrl || '../images/default-activity.jpg';
+                        const caption = photo.caption || '';
+                        const colorIndex = index % colors.length;
+                        const borderColor = colors[colorIndex];
+                        const bgColor = bgColors[colorIndex];
+                        
+                        html += `
+                            <div class="activity-card" style="background-color: ${bgColor}; border: 3px solid ${borderColor};">
+                                <div style="perspective: 1000px; margin-bottom: 1em;">
+                                    <img src="${imageUrl}" alt="${title} - Photo ${index + 1}" class="card-image" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 3px solid ${borderColor}; box-shadow: 0 10px 30px rgba(0,0,0,0.3), -5px 5px 15px rgba(0,0,0,0.2), 5px 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; transform: rotateX(5deg) rotateY(-5deg);" onclick="window.openModal('${imageUrl}')" onmouseover="this.style.transform='rotateX(-5deg) rotateY(5deg) scale(1.05)'; this.style.boxShadow='0 20px 50px rgba(0,0,0,0.4), -10px 10px 25px rgba(0,0,0,0.3), 10px 10px 25px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='rotateX(5deg) rotateY(-5deg) scale(1)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3), -5px 5px 15px rgba(0,0,0,0.2), 5px 5px 15px rgba(0,0,0,0.2)';" />
+                                </div>
+                                <h3>${title}</h3>
+                                <p>${caption}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<p style="text-align: center; grid-column: 1/-1;">No photos found in this activity.</p>';
+                }
+                
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading activities:', error);
+                document.getElementById('activities-container').innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Error loading activities. Please try again later.</p>';
+            }
+        }
+        
+        // Load activities when page is ready
+        document.addEventListener('DOMContentLoaded', loadAllActivities);
+    </script>
+</body>
+</html>

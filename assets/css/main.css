@@ -1984,19 +1984,17 @@ input, select, textarea {
 		margin-bottom: 0;
 	}
 
-		#header .logo-container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding: 2em 0;
-			border-bottom: 2px solid rgb(255, 254, 254);
-			width: 100%;
-			position: relative;
-			background: url('/assets/css/images/assam.png') center center/contain no-repeat;
-			background-size: contain;
-		}
-
-		#header .logo-container > div {
+	#header .logo-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 30px 0;
+		border-bottom: 2px solid rgb(255, 254, 254);
+		width: 100%;
+		position: relative;
+		background: url('/assets/css/images/assam.png') center center/contain no-repeat;
+		background-size: contain;
+	}		#header .logo-container > div {
 			text-align: center;
 			display: flex;
 			flex-direction: column;
@@ -2005,35 +2003,32 @@ input, select, textarea {
 			width: 100%;
 		}
 
-		#header .header-logo {
-			width: 100px;
-			height: 100px;
-			border-radius: 50%;
-			box-shadow: 0 4px 8px rgba(208, 7, 7, 0.3);
-			transition: transform 0.3s ease;
-			object-fit: cover;
-			display: block;
-		}
-
-
+	#header .header-logo {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		box-shadow: 0 4px 8px rgba(208, 7, 7, 0.3);
+		transition: transform 0.3s ease;
+		object-fit: cover;
+		display: block;
+		margin-bottom: 15px;
+	}
 		#header .header-logo:hover {
 			transform: scale(1.05);
 		}
 
-		#header .header-title {
-			color: #fff;
-			font-size: 1.8em;
-			margin: 1.2em 0 0 0;
-			padding: 0;
-			font-weight: bold;
-			width: 100%;
-			text-align: center;
-			font-style: normal;
-			font-family: 'windsor', sans-serif;
-			text-shadow: #ea1374 2px 2px 4px;
-		}	
-
-		#header .inner {
+	#header .header-title {
+		color: #fff;
+		font-size: 1.8em;
+		margin: 0;
+		padding: 0;
+		font-weight: bold;
+		width: 100%;
+		text-align: center;
+		font-style: normal;
+		font-family: 'windsor', sans-serif;
+		text-shadow: #ea1374 2px 2px 4px;
+	}		#header .inner {
 			background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
 			background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
 			background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
@@ -2204,6 +2199,20 @@ input, select, textarea {
 				padding-bottom: 1px;
 			}
 
+			#page-wrapper.navPanel-visible {
+				-moz-transform: translateX(275px);
+				-webkit-transform: translateX(275px);
+				-ms-transform: translateX(275px);
+				transform: translateX(275px);
+			}
+
+			#page-wrapper.navPanel-visible #navPanel {
+				-moz-transform: translateX(0);
+				-webkit-transform: translateX(0);
+				-ms-transform: translateX(0);
+				transform: translateX(0);
+			}
+
 			#titleBar {
 				-moz-backface-visibility: hidden;
 				-webkit-backface-visibility: hidden;
@@ -2246,7 +2255,8 @@ input, select, textarea {
 					top: 0;
 					width: 60px;
 					height: 44px;
-					opacity: 0.25;
+					opacity: 1;
+					background: #000000;
 				}
 
 					#titleBar .toggle:before {
@@ -2366,13 +2376,6 @@ input, select, textarea {
 				transform: translateX(275px);
 			}
 
-			body.navPanel-visible #titleBar {
-				-moz-transform: translateX(275px);
-				-webkit-transform: translateX(275px);
-				-ms-transform: translateX(275px);
-				transform: translateX(275px);
-			}
-
 			body.navPanel-visible #navPanel {
 				-moz-transform: translateX(0);
 				-webkit-transform: translateX(0);
@@ -2390,12 +2393,54 @@ input, select, textarea {
 				display: flex !important;
 			}
 
-			#header .header-title {
-				font-size: 1.5em;
-				margin: 0.75em 0 0 0;
+			#titleBar {
+				display: block !important;
+				background: transparent;
+				box-shadow: none;
+				height: auto;
+				position: fixed;
+				width: auto;
+				left: 20px;
+				top: 20px;
+				z-index: 10002;
+				border: none;
+				padding: 0;
+				margin: 0;
 			}
-			
-			#header .inner {
+
+			#titleBar .title {
+				display: none !important;
+			}
+
+			#titleBar .toggle {
+				display: flex !important;
+				
+				position: relative;
+				width: 40px;
+				height: 40px;
+				background: #000000;
+				border-radius: 6px;
+				cursor: pointer;
+				border: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			#titleBar .toggle:before {
+				font-size: 24px;
+				color: #fff;
+				font-weight: 900;
+				opacity: 1;
+			}
+
+			#titleBar .toggle:hover {
+				background: #1a1a1a;
+			}
+
+		#header .header-title {
+			font-size: 1.5em;
+			margin: 0;
+		}			#header .inner {
 				display: none !important;
 			}
 
@@ -2459,6 +2504,11 @@ input, select, textarea {
 
 			h2 {
 				line-height: 1.5em;
+			}
+
+/* Show the navigation panel on small screens when activated */
+		#navPanel {
+			display: block !important;
 			}
 
 		/* Section/Article */

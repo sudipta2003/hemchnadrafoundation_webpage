@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - Admin Panel</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Calibri', 'Segoe UI', Tahoma, sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #2c3e50;
+            padding: 12px 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            color: #9b59b6;
+        }
+        .document-wrapper {
+            max-width: 1400px;
+            margin: 30px auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .document-header {
+            background: linear-gradient(to right, #9b59b6, #8e44ad);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            border-bottom: 5px solid #9b59b6;
+        }
+        .document-header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        .document-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .document-toolbar {
+            background-color: #ecf0f1;
+            padding: 15px 40px;
+            border-bottom: 1px solid #bdc3c7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .toolbar-left {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-add {
+            background-color: #9b59b6;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+        .btn-add:hover {
+            background-color: #8e44ad;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .document-content {
+            padding: 40px;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 35% 65%;
+            gap: 40px;
+        }
+        .form-panel {
+            background: white;
+            border: 1px solid #bdc3c7;
+            padding: 30px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .form-panel h2 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #9b59b6;
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #34495e;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+            font-size: 0.95em;
+            font-family: 'Calibri', Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #9b59b6;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+        }
+        .preview-section {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 3px;
+            border: 1px solid #ecf0f1;
+        }
+        .preview-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .preview-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 1px solid #bdc3c7;
+        }
+        .photo-thumbnail {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 1px solid #bdc3c7;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .photo-thumbnail:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transform: scale(1.05);
+        }
+        .custom-field {
+            position: relative;
+            padding: 15px;
+            background-color: #f4e9f7;
+            border: 2px dashed #9b59b6;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+        .custom-field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .custom-field-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95em;
+        }
+        .btn-remove-field {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: 0.2s;
+        }
+        .btn-remove-field:hover {
+            background-color: #c0392b;
+        }
+        .field-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .field-type-btn {
+            padding: 8px 12px;
+            border: 1px solid #bdc3c7;
+            background-color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: 0.2s;
+        }
+        .field-type-btn.active {
+            background-color: #9b59b6;
+            color: white;
+            border-color: #9b59b6;
+        }
+        .btn-submit {
+            background: #9b59b6;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+        .btn-submit:hover {
+            background: #8e44ad;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .events-panel {
+            background: white;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .events-panel h2 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 0;
+            border-bottom: 3px solid #9b59b6;
+            padding: 25px 30px;
+            font-weight: 600;
+            background-color: #f8f9fa;
+        }
+        .events-list-container {
+            padding: 30px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .event-item {
+            padding: 18px;
+            border-left: 4px solid #9b59b6;
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .event-item:hover {
+            background-color: #ecf0f1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .event-info {
+            flex: 1;
+        }
+        .event-info h3 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+            font-size: 1.05em;
+            font-weight: 600;
+        }
+        .event-info p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .event-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.85em;
+        }
+        .btn-edit {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn-edit:hover {
+            background-color: #2980b9;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: #95a5a6;
+        }
+        .empty-state i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            opacity: 0.5;
+        }
+        
+        /* Progress Bar Styles */
+        .progress-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .progress-container.show {
+            display: block;
+        }
+        
+        .progress-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px 30px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: #ecf0f1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #bdc3c7;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .progress-percentage {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="manage-events.html"><i class="fas fa-calendar"></i> Manage Events</a>
+        <a href="manage-activities.html"><i class="fas fa-list"></i> Manage Activities</a>
+        <a href="manage-archives.html"><i class="fas fa-archive"></i> Manage Archives</a>
+    </div>
+
+    <div class="document-wrapper">
+        <div class="document-header">
+            <h1><i class="fas fa-calendar-plus"></i> Manage Events</h1>
+            <p>Create and manage all events for the foundation</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-content">
+                <div class="progress-text">Uploading Event Data...</div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 0%;">
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+                <div class="progress-percentage"><span id="progressLabel">Preparing upload...</span></div>
+            </div>
+        </div>
+
+        <div class="document-toolbar">
+            <div class="toolbar-left">
+                <button class="btn-add" id="scrollToForm"><i class="fas fa-plus"></i> Add New Event</button>
+            </div>
+        </div>
+
+        <div class="document-content">
+            <div class="content-grid">
+                <div class="form-panel">
+                    <h2>Add New Event</h2>
+                    <form id="eventForm">
+                        <!-- Main Event Section -->
+                        <div style="background-color: #f0e6f7; padding: 20px; border-radius: 3px; margin-bottom: 25px; border-left: 4px solid #9b59b6;">
+                            <h3 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.1em;">Main Event Details</h3>
+                            
+                            <div class="form-group">
+                                <label for="eventTitle">Event Title *</label>
+                                <input type="text" id="eventTitle" name="title" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eventTitleImage">Title Image</label>
+                                <input type="file" id="eventTitleImage" name="titleImage" accept="image/*">
+                                <div class="preview-section">
+                                    <div class="preview-title">Title Image Preview:</div>
+                                    <img id="eventTitleImagePreview" class="preview-img" src="" alt="Preview" style="display: none;">
+                                    <p id="eventTitleImageLabel" style="color: #95a5a6; font-size: 0.9em;">No image selected</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eventDescription">Description *</label>
+                                <textarea id="eventDescription" name="description" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Custom Fields Section -->
+                        <div id="customFieldsContainer"></div>
+
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button type="button" class="btn-add" id="addFieldBtn" style="flex: 1; background-color: #3498db;" title="New fields will be added to the current subheading group (if any)"><i class="fas fa-plus"></i> Add Field</button>
+                            <button type="submit" class="btn-submit" style="flex: 1;">Add Event</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="events-panel">
+                    <h2>All Events</h2>
+                    <div class="events-list-container">
+                        <div id="eventsList">
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>No events yet. Create your first event!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script type="module" src="../assets/js/firebase-init.js"></script>
+    <script type="module">
+        import {
+            collection,
+            getDocs,
+            query,
+            orderBy,
+            serverTimestamp,
+            setDoc,
+            doc,
+            deleteDoc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        // Use the db instance from firebase-init.js
+        const db = window.db;
+        const storage = window.storage;
+        const { ref, uploadBytes, getDownloadURL, deleteObject } = window.firebaseStorage;
+
+        // Progress bar elements
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const progressLabel = document.getElementById('progressLabel');
+
+        // Progress bar helper functions
+        function showProgressBar() {
+            progressContainer.classList.add('show');
+        }
+
+        function hideProgressBar() {
+            progressContainer.classList.remove('show');
+        }
+
+        function updateProgress(current, total, stage = '') {
+            const percentage = Math.round((current / total) * 100);
+            progressFill.style.width = percentage + '%';
+            progressPercent.textContent = percentage + '%';
+            if (stage) {
+                progressLabel.textContent = stage;
+            }
+        }
+
+        // Get next event ID counter
+        async function getNextEventNumber() {
+            try {
+                const eventsRef = collection(db, 'events');
+                const q = query(eventsRef);
+                const snapshot = await getDocs(q);
+                
+                let maxNum = 0;
+                snapshot.forEach(doc => {
+                    const docId = doc.id;
+                    const match = docId.match(/eventID(\d+)/);
+                    if (match) {
+                        const num = parseInt(match[1]);
+                        if (num > maxNum) maxNum = num;
+                    }
+                });
+                
+                return maxNum + 1;
+            } catch (error) {
+                console.error('Error getting next event number:', error);
+                return 1;
+            }
+        }
+
+        const form = document.getElementById('eventForm');
+        const eventsList = document.getElementById('eventsList');
+        const scrollBtn = document.getElementById('scrollToForm');
+        const eventTitleImageInput = document.getElementById('eventTitleImage');
+        const eventTitleImagePreview = document.getElementById('eventTitleImagePreview');
+        const eventTitleImageLabel = document.getElementById('eventTitleImageLabel');
+        const customFieldsContainer = document.getElementById('customFieldsContainer');
+        const addFieldBtn = document.getElementById('addFieldBtn');
+
+        let fieldCount = 0;
+        let selectedPhotos = []; // Store selected photo files
+        let selectedTitleImage = null; // Store selected title image file
+        let currentSubheading = null; // Track current subheading for grouping
+
+        // Add Field functionality
+        addFieldBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            fieldCount++;
+            const fieldId = 'customField_' + fieldCount;
+            
+            // Assign field to current subheading group if one is active
+            const subheadingGroup = currentSubheading || '';
+            
+            const fieldHTML = `
+                <div class="custom-field" id="${fieldId}" data-subheading-group="${subheadingGroup}" data-type="text">
+                    <div class="custom-field-header">
+                        <span class="custom-field-label">New Field</span>
+                        <button type="button" class="btn-remove-field" onclick="removeField('${fieldId}')"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                    <div class="field-type-selector">
+                        <button type="button" class="field-type-btn active" onclick="setFieldType('${fieldId}', 'text')">Text</button>
+                        <button type="button" class="field-type-btn" onclick="setFieldType('${fieldId}', 'subheading')">Subheading</button>
+                        <button type="button" class="field-type-btn" onclick="setFieldType('${fieldId}', 'image-caption')">Photo & Caption</button>
+                    </div>
+                    <input type="text" class="custom-input" data-type="text" data-field-id="${fieldId}" placeholder="Field value" style="width: 100%; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 3px; background-color: #f8f9fa;">
+                </div>
+            `;
+            
+            customFieldsContainer.insertAdjacentHTML('beforeend', fieldHTML);
+        });
+
+        // Remove Field functionality
+        window.removeField = function(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.remove();
+            }
+        };
+
+        // Change Field Type
+        window.setFieldType = function(fieldId, type) {
+            const field = document.getElementById(fieldId);
+            const buttons = field.querySelectorAll('.field-type-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Find and mark the active button based on the type passed
+            const activeButton = Array.from(buttons).find(btn => btn.textContent.trim() === (type === 'image-caption' ? 'Photo & Caption' : (type === 'subheading' ? 'Subheading' : 'Text')));
+            if (activeButton) activeButton.classList.add('active');
+            
+            // Always update data-type attribute
+            field.dataset.type = type;
+            
+            // Handle subheading type
+            if (type === 'subheading') {
+                field.style.backgroundColor = '#fff9e6';
+                field.style.borderColor = '#f39c12';
+                
+                const input = field.querySelector('.custom-input');
+                input.placeholder = 'Subheading text';
+                input.style.display = '';
+                
+                // Set this as the current subheading
+                currentSubheading = fieldId;
+                field.dataset.subheadingGroup = fieldId;
+                return;
+            }
+            
+            // Reset background for non-subheading fields
+            field.style.backgroundColor = '#f4e9f7';
+            field.style.borderColor = '#9b59b6';
+            
+            // Update the data attribute for grouping if there's a current subheading
+            if (currentSubheading && field.dataset.subheadingGroup === '') {
+                field.dataset.subheadingGroup = currentSubheading;
+            }
+            
+            const input = field.querySelector('.custom-input');
+            input.style.display = '';
+            
+            if (type === 'image-caption') {
+                const container = document.createElement('div');
+                container.style.cssText = 'display: flex; flex-direction: column; gap: 10px;';
+                
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.className = 'custom-input image-input';
+                fileInput.dataset.type = type;
+                fileInput.dataset.fieldId = fieldId;
+                fileInput.style.cssText = 'width: 100%; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 3px; background-color: #f8f9fa; cursor: pointer;';
+                
+                const captionInput = document.createElement('textarea');
+                captionInput.className = 'custom-input caption-input';
+                captionInput.dataset.fieldId = fieldId;
+                captionInput.placeholder = 'Image caption';
+                captionInput.style.cssText = 'width: 100%; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 3px; background-color: #f8f9fa; min-height: 60px; font-family: Calibri, Arial, sans-serif;';
+                
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.style.cssText = 'margin-top: 10px; text-align: center;';
+                preview.innerHTML = '<p style="color: #95a5a6; font-size: 0.9em;">No image selected</p>';
+                
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            preview.innerHTML = `<img src="${event.target.result}" style="max-width: 100%; max-height: 150px; border-radius: 3px; border: 1px solid #bdc3c7;">`;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.innerHTML = '<p style="color: #95a5a6; font-size: 0.9em;">No image selected</p>';
+                    }
+                });
+                
+                container.appendChild(fileInput);
+                container.appendChild(captionInput);
+                container.appendChild(preview);
+                
+                input.replaceWith(container);
+            } else {
+                // Text type - simple text input
+                const newInput = document.createElement('input');
+                newInput.type = 'text';
+                newInput.className = 'custom-input';
+                newInput.dataset.type = type;
+                newInput.dataset.fieldId = fieldId;
+                newInput.placeholder = 'Field value';
+                newInput.style.cssText = 'width: 100%; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 3px; background-color: #f8f9fa;';
+                input.replaceWith(newInput);
+            }
+        };
+
+        // Title image preview
+        if (eventTitleImageInput) {
+            eventTitleImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    selectedTitleImage = file; // Store the file object
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        eventTitleImagePreview.src = event.target.result;
+                        eventTitleImagePreview.style.display = 'block';
+                        eventTitleImageLabel.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    selectedTitleImage = null;
+                    eventTitleImagePreview.style.display = 'none';
+                    eventTitleImageLabel.style.display = 'block';
+                }
+            });
+        }
+
+        // Load events from Firebase
+        async function loadEvents() {
+            try {
+                const eventsRef = collection(db, 'events');
+                const q = query(eventsRef, orderBy('createdAt', 'desc'));
+                const snapshot = await getDocs(q);
+                
+                const events = [];
+                snapshot.forEach(doc => {
+                    events.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                displayEvents(events);
+            } catch (error) {
+                console.error('Error loading events:', error);
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading events. Please refresh the page.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display events
+        function displayEvents(events) {
+            if (events.length === 0) {
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>No events yet. Create your first event!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            eventsList.innerHTML = events.map((event) => {
+                let customFieldsHtml = '';
+                
+                if (event.customFields && Object.keys(event.customFields).length > 0) {
+                    customFieldsHtml = `
+                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;">
+                    `;
+                    
+                    for (const [label, value] of Object.entries(event.customFields)) {
+                        // Check if this is a subheading group (object with multiple fields)
+                        if (typeof value === 'object' && !value.image && !Array.isArray(value)) {
+                            // This is a subheading group
+                            customFieldsHtml += `
+                                <div style="margin: 15px 0; padding: 12px; background-color: #fff9e6; border-left: 4px solid #f39c12; border-radius: 3px;">
+                                    <h4 style="margin: 0 0 10px 0; color: #f39c12; font-size: 1em;">${label}</h4>
+                            `;
+                            
+                            for (const [fieldLabel, fieldValue] of Object.entries(value)) {
+                                if (typeof fieldValue === 'object' && fieldValue.image && fieldValue.caption !== undefined) {
+                                    // Image with caption
+                                    customFieldsHtml += `
+                                        <div style="margin: 10px 0;">
+                                            <p style="margin: 5px 0; color: #555;"><strong>${fieldLabel}:</strong></p>
+                                            <img src="${fieldValue.image}" style="max-width: 100%; max-height: 150px; border-radius: 3px; border: 1px solid #bdc3c7; margin: 5px 0;">
+                                            <p style="margin: 5px 0; color: #666; font-size: 0.9em; font-style: italic;">${fieldValue.caption}</p>
+                                        </div>
+                                    `;
+                                } else {
+                                    // Regular text field
+                                    customFieldsHtml += `<p style="margin: 5px 0; color: #555;"><strong>${fieldLabel}:</strong> ${fieldValue}</p>`;
+                                }
+                            }
+                            
+                            customFieldsHtml += `
+                                </div>
+                            `;
+                        } else if (typeof value === 'object' && value.image && value.caption !== undefined) {
+                            // Top-level image with caption
+                            customFieldsHtml += `
+                                <div style="margin: 10px 0;">
+                                    <p style="margin: 5px 0; color: #555;"><strong>${label}:</strong></p>
+                                    <img src="${value.image}" style="max-width: 100%; max-height: 150px; border-radius: 3px; border: 1px solid #bdc3c7; margin: 5px 0;">
+                                    <p style="margin: 5px 0; color: #666; font-size: 0.9em; font-style: italic;">${value.caption}</p>
+                                </div>
+                            `;
+                        } else {
+                            // Regular top-level field
+                            customFieldsHtml += `<p style="margin: 5px 0; color: #555;"><strong>${label}:</strong> ${value}</p>`;
+                        }
+                    }
+                    
+                    customFieldsHtml += `
+                        </div>
+                    `;
+                }
+                
+                return `
+                    <div class="event-item">
+                        <div class="event-info" style="width: 100%;">
+                            ${event.titleImage ? `
+                                <img src="${event.titleImage}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 3px; border: 1px solid #bdc3c7; margin-bottom: 15px;">
+                            ` : ''}
+                            <h3>${event.title}</h3>
+                            <p>${event.description.substring(0, 100)}...</p>
+                            ${customFieldsHtml}
+                        </div>
+                        <div class="event-actions" style="position: absolute; top: 10px; right: 10px; flex-direction: column; width: auto;">
+                            <button class="btn-edit" onclick="editEvent('${event.id}')" style="margin-bottom: 5px;">Edit</button>
+                            <button class="btn-delete" onclick="deleteEvent('${event.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Add event
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await saveEvent();
+
+            async function saveEvent() {
+                try {
+                    showProgressBar();
+                    
+                    // Show loading state
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerText;
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = 'Uploading...';
+
+                    updateProgress(5, 100, 'Preparing upload...');
+
+                    // Get next event ID number
+                    const nextNum = await getNextEventNumber();
+                    const eventDocId = `eventID${nextNum}`;
+
+                    updateProgress(10, 100, 'Uploading title image...');
+
+                    // Upload title image to Storage
+                    let titleImageUrl = null;
+                    if (selectedTitleImage) {
+                        const titleImageRef = ref(storage, `events/${eventDocId}/title-image/${selectedTitleImage.name}`);
+                        await uploadBytes(titleImageRef, selectedTitleImage);
+                        titleImageUrl = await getDownloadURL(titleImageRef);
+                    }
+
+                    updateProgress(30, 100, 'Uploading event photos...');
+
+                    // Upload photos to Storage (if any selected)
+                    let photoUrls = [];
+                    if (selectedPhotos && selectedPhotos.length > 0) {
+                        for (let i = 0; i < selectedPhotos.length; i++) {
+                            const photoFile = selectedPhotos[i];
+                            const photoRef = ref(storage, `events/${eventDocId}/photos/${photoFile.name}`);
+                            await uploadBytes(photoRef, photoFile);
+                            const photoUrl = await getDownloadURL(photoRef);
+                            photoUrls.push(photoUrl);
+                            
+                            // Update progress based on photo uploads
+                            const photoProgress = 30 + ((i + 1) / selectedPhotos.length) * 50;
+                            updateProgress(photoProgress, 100, `Uploading photos (${i + 1}/${selectedPhotos.length})...`);
+                        }
+                    }
+
+                    updateProgress(80, 100, 'Processing event data...');
+
+                    // Collect custom fields with subheading grouping using data attributes
+                    // Structure: { "title": "", "description": "", "customFields": { "subheading": { "Text": "value", "Photo & Caption": {...} }, ... } }
+                    const customFields = {};
+                    const customImageFields = {}; // Store image files for image-caption fields
+                    const customFieldElements = document.querySelectorAll('.custom-field');
+                    
+                    // First pass: Identify all subheading fields and create their containers
+                    const subheadingMap = {}; // Maps fieldId to subheading label
+                    
+                    customFieldElements.forEach((fieldElement) => {
+                        const isSubheading = fieldElement.dataset.type === 'subheading';
+                        
+                        // Register all subheadings and initialize their containers as objects
+                        if (isSubheading) {
+                            const valueInput = fieldElement.querySelector('.custom-input');
+                            const subheadingLabel = valueInput && valueInput.value.trim() ? valueInput.value.trim() : fieldElement.id;
+                            subheadingMap[fieldElement.id] = subheadingLabel;
+                            customFields[subheadingLabel] = {}; // Initialize as empty object for this subheading
+                        }
+                    });
+                    
+                    // Track field type counts per subheading for handling duplicates
+                    const fieldTypeCounters = {};
+                    
+                    // Second pass: Process all fields and assign them to their respective subheadings
+                    customFieldElements.forEach((fieldElement) => {
+                        const subheadingGroupId = fieldElement.dataset.subheadingGroup;
+                        const fieldType = fieldElement.dataset.type;
+                        const isSubheading = fieldType === 'subheading';
+                        
+                        // Skip subheading fields themselves - they're just containers
+                        if (isSubheading) {
+                            return;
+                        }
+                        
+                        // Determine which subheading group this field belongs to (if any)
+                        let subheadingLabel = null;
+                        if (subheadingGroupId && subheadingGroupId !== '') {
+                            subheadingLabel = subheadingMap[subheadingGroupId];
+                        }
+                        
+                        // Create a counter key for tracking duplicate field types
+                        const counterKey = subheadingLabel ? `${subheadingLabel}:${fieldType}` : fieldType;
+                        fieldTypeCounters[counterKey] = (fieldTypeCounters[counterKey] || 0) + 1;
+                        
+                        // Create field label with counter if this is a duplicate type
+                        let fieldLabel = fieldType === 'image-caption' ? 'Photo & Caption' : 'Text';
+                        if (fieldTypeCounters[counterKey] > 1) {
+                            fieldLabel = fieldLabel + ' ' + fieldTypeCounters[counterKey];
+                        }
+                        
+                        // Check for image-caption field type first
+                        const imageInput = fieldElement.querySelector('.image-input');
+                        const captionInput = fieldElement.querySelector('.caption-input');
+                        
+                        // Handle image-caption field type
+                        if (fieldType === 'image-caption' && imageInput && captionInput) {
+                            const imageFile = imageInput.files[0];
+                            const caption = captionInput.value;
+                            if (imageFile) {
+                                const fieldData = {
+                                    file: imageFile,
+                                    caption: caption
+                                };
+                                
+                                if (subheadingLabel) {
+                                    // Add to subheading group with key format for later processing
+                                    customImageFields[`${subheadingLabel}:${fieldLabel}`] = fieldData;
+                                } else {
+                                    // Top-level field (no subheading)
+                                    customImageFields[fieldLabel] = fieldData;
+                                }
+                            }
+                            return; // Skip to next field
+                        }
+                        
+                        // Handle regular text field
+                        const valueInput = fieldElement.querySelector('.custom-input:not(.image-input):not(.caption-input)');
+                        if (valueInput && valueInput.value) {
+                            if (subheadingLabel) {
+                                // Add field to its subheading group object
+                                customFields[subheadingLabel][fieldLabel] = valueInput.value;
+                            } else {
+                                // Top-level field (no subheading)
+                                customFields[fieldLabel] = valueInput.value;
+                            }
+                        }
+                    });
+
+                    // Upload image-caption files to Storage and build final structure
+                    for (const [fieldName, fieldData] of Object.entries(customImageFields)) {
+                        const imageFile = fieldData.file;
+                        const caption = fieldData.caption;
+                        const fieldImageRef = ref(storage, `events/${eventDocId}/custom-fields/${fieldName}/${imageFile.name}`);
+                        await uploadBytes(fieldImageRef, imageFile);
+                        const imageUrl = await getDownloadURL(fieldImageRef);
+                        
+                        if (fieldName.includes(':')) {
+                            // This is a subheading-grouped field (format: "subheading:fieldtype")
+                            const [subheadingLabel, fieldLabel] = fieldName.split(':');
+                            // Directly add to the subheading group in customFields
+                            customFields[subheadingLabel][fieldLabel] = {
+                                image: imageUrl,
+                                caption: caption
+                            };
+                        } else {
+                            // Top-level field (no subheading)
+                            customFields[fieldName] = {
+                                image: imageUrl,
+                                caption: caption
+                            };
+                        }
+                    }
+
+                    updateProgress(90, 100, 'Saving to database...');
+
+                    // Create event object with URLs only (no base64 data)
+                    const newEvent = {
+                        title: document.getElementById('eventTitle').value,
+                        description: document.getElementById('eventDescription').value,
+                        image: titleImageUrl, // URL only
+                        titleImage: titleImageUrl, // URL only
+                        photos: photoUrls, // Array of photo URLs (may be empty)
+                        customFields: customFields,
+                        createdAt: new Date().toISOString()
+                    };
+
+                    // Save to Firestore
+                    const eventDocRef = doc(db, 'events', eventDocId);
+                    await setDoc(eventDocRef, newEvent);
+
+                    updateProgress(100, 100, 'Complete!');
+
+                    // Reset form
+                    form.reset();
+                    eventTitleImagePreview.style.display = 'none';
+                    eventTitleImageLabel.style.display = 'block';
+                    customFieldsContainer.innerHTML = '';
+                    selectedTitleImage = null;
+                    fieldCount = 0;
+                    currentSubheading = null;
+
+                    // Restore button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = originalText;
+
+                    // Hide progress bar after 1 second
+                    setTimeout(() => {
+                        hideProgressBar();
+                    }, 1000);
+
+                    await loadEvents();
+                    alert('Event added successfully!');
+                } catch (error) {
+                    console.error('Error saving event:', error);
+                    alert('Error saving event. Please try again.');
+                    hideProgressBar();
+                    // Restore button state on error
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Add Event';
+                }
+            }
+        });
+
+        // Delete event
+        window.deleteEvent = async function(eventId) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                try {
+                    showProgressBar();
+                    updateProgress(10, 100, 'Fetching event data...');
+
+                    // Get event data to retrieve image URLs
+                    const eventDocRef = doc(db, 'events', eventId);
+                    const eventSnapshot = await getDoc(eventDocRef);
+                    const eventData = eventSnapshot.data();
+
+                    updateProgress(30, 100, 'Deleting images from storage...');
+
+                    // Delete title image if it exists
+                    if (eventData.titleImage) {
+                        try {
+                            const titleImageRef = ref(storage, `events/${eventId}/title-image/${eventData.titleImage.split('/').pop().split('?')[0]}`);
+                            await deleteObject(titleImageRef);
+                        } catch (err) {
+                            console.warn('Could not delete title image, it may not exist:', err);
+                        }
+                    }
+
+                    // Delete all event photos
+                    if (eventData.photos && eventData.photos.length > 0) {
+                        for (let i = 0; i < eventData.photos.length; i++) {
+                            try {
+                                const photoRef = ref(storage, `events/${eventId}/photos/${eventData.photos[i].split('/').pop().split('?')[0]}`);
+                                await deleteObject(photoRef);
+                            } catch (err) {
+                                console.warn('Could not delete photo, it may not exist:', err);
+                            }
+                        }
+                    }
+
+                    updateProgress(70, 100, 'Removing from database...');
+
+                    // Delete Firestore document
+                    await deleteDoc(eventDocRef);
+
+                    updateProgress(100, 100, 'Event deleted!');
+
+                    // Hide progress bar after 1 second
+                    setTimeout(() => {
+                        hideProgressBar();
+                    }, 1000);
+
+                    await loadEvents();
+                    alert('Event and all associated images deleted successfully!');
+                } catch (error) {
+                    console.error('Error deleting event:', error);
+                    hideProgressBar();
+                    alert('Error deleting event. Please try again.');
+                }
+            }
+        };
+
+        // Edit event (placeholder - can be expanded)
+        window.editEvent = function(eventId) {
+            alert('Edit functionality coming soon!');
+        };
+
+        // Scroll to form
+        scrollBtn.addEventListener('click', function() {
+            document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Load events on page load
+        window.addEventListener('load', loadEvents);
+    </script>
+</body>
+</html>
