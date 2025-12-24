@@ -86,9 +86,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: url("/assets/css/images/bg1.jpeg") center center / cover no-repeat;
-            filter: blur(20px);
-            transform: scale(1.06);
+            background: url("images/bg.png") center center / cover no-repeat;
             z-index: 0;
         }
         #header > * {
@@ -137,12 +135,14 @@
         <div id="header-wrapper">
             <div class="container">
                 <header id="header">
-                    <div class="logo-container">
-                        <div>
-                            <img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
-                            <h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                        <div class="logo-container">
+                            <div>
+                                <img src="../images/logo.png" alt="Pandit Hem Chandra Goswami" class="header-logo">
+                                <h1 class="header-title">Pandit Hemchandra Goswami Foundation</h1>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="inner">
                     </div>
                 </header>
@@ -165,20 +165,6 @@
                         </div>
                     </section>
                 </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <div id="footer-wrapper">
-            <div class="container">
-                <footer id="footer">
-                    <div class="row">
-                        <div class="col-12">
-                            <div id="copyright">
-                                <p>&copy; 2024 Pandit Hemchandra Goswami Foundation. All rights reserved.</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
     </div>
@@ -226,5 +212,51 @@
             }
         });
     </script>
+
+    <!-- Footer -->
+    <div id="footer-wrapper">
+        <footer id="footer" class="container">
+            <div class="row">
+                <div class="col-6 col-12-medium imp-medium">
+                    <!-- About -->
+                    <section>
+                        <h2>About Us</h2>
+                        <p>Learn more about the Hemchandra Goswami Foundation and our mission to preserve and promote the cultural heritage and philosophical contributions of Pandit Hemchandra Goswami to Assam and beyond.</p>
+                        <a href="../about/about.html" class="button alt icon solid fa-arrow-circle-right">Learn More</a>
+                    </section>
+                </div>
+                <div class="col-6 col-12-medium imp-medium">
+                    <!-- Contact -->
+                    <section>
+                        <h2>Get in Touch</h2>
+                        <div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <dl class="contact">
+                                        <dt>Address</dt>
+                                        <dd>
+                                            Hemchandra Goswami Foundation<br />
+                                            Assam, India
+                                        </dd>
+                                        <dt>Phone</dt>
+                                        <dd><a href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a></dd>
+                                        <dt>Email</dt>
+                                        <dd><a href="mailto:hemchnadrafoundation@gmail.com">hemchnadrafoundation@gmail.com</a></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-12">
+                    <div id="copyright">
+                        <ul class="menu">
+                            <li>&copy; Hemchandra Goswami Foundation. All rights reserved</li><li>Design: <a href="#">Sudipta Parasar</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

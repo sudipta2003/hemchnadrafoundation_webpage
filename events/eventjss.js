@@ -151,7 +151,7 @@ function renderEvents(events) {
 		const titleImage = event.titleImage || '../images/default-event.jpg';
 		
 		return `
-			<a href="event-details.html?id=${event.id}" class="event-card-link">
+			<a href="events/event-details.html?id=${event.id}" class="event-card-link">
 				<div class="event-card">
 					<div class="event-card-image-container">
 						<img src="${titleImage}" alt="${event.title || 'Event Image'}" class="event-card-image" />
@@ -167,8 +167,8 @@ function renderEvents(events) {
 	if (!existingLearnMore) {
 		const learnMoreDiv = document.createElement('div');
 		learnMoreDiv.style.textAlign = 'center';
-		learnMoreDiv.style.marginTop = '30px';
-		learnMoreDiv.style.paddingBottom = '20px';
+		learnMoreDiv.style.marginTop = '10px';
+		learnMoreDiv.style.paddingBottom = '0px';
 		// Determine the correct path based on current page location
 		const allEventsPath = window.location.pathname.includes('/events/') ? 'all-events.html' : 'events/all-events.html';
 		learnMoreDiv.innerHTML = `<a href="${allEventsPath}" id="learn-more-link" class="learn-more-link">View All Events</a>`;
@@ -196,7 +196,7 @@ function rotateEvents() {
 			const titleImage = event.titleImage || '../images/default-event.jpg';
 			
 			return `
-				<a href="event-details.html?id=${event.id}" class="event-card-link">
+				<a href="events/event-details.html?id=${event.id}" class="event-card-link">
 					<div class="event-card">
 						<div class="event-card-image-container">
 							<img src="${titleImage}" alt="${event.title || 'Event Image'}" class="event-card-image" />
