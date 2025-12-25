@@ -221,6 +221,43 @@ const scene = new THREE.Scene();
 
     document.addEventListener("mouseup", () => (isDragging = false));
 
+    // === Touch Controls for Mobile ===
+    renderer.domElement.addEventListener("touchstart", (event) => {
+      if (event.touches.length === 1) {
+        const touch = event.touches[0];
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects([earth, indiaOverlay, atmosphere]);
+        isHoveringOverEarth = intersects.length > 0;
+
+        if (isHoveringOverEarth) {
+          isDragging = true;
+          previousMousePosition = { x: touch.clientX, y: touch.clientY };
+        }
+      }
+    });
+
+    renderer.domElement.addEventListener("touchmove", (event) => {
+      if (isDragging && event.touches.length === 1) {
+        event.preventDefault();
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - previousMousePosition.x;
+        const deltaY = touch.clientY - previousMousePosition.y;
+        earth.rotation.y += deltaX * 0.01;
+        earth.rotation.x += deltaY * 0.01;
+        indiaOverlay.rotation.copy(earth.rotation);
+        atmosphere.rotation.copy(earth.rotation);
+        previousMousePosition = { x: touch.clientX, y: touch.clientY };
+      }
+    }, { passive: false });
+
+    renderer.domElement.addEventListener("touchend", () => {
+      isDragging = false;
+    });
+
     renderer.domElement.addEventListener(
       "wheel",
       (e) => {

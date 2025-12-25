@@ -15,12 +15,19 @@
 				margin: 0 auto;
 				padding: 20px;
 			}
-			.pdf-viewer {
+			.image-gallery {
 				width: 100%;
-				height: 800px;
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+			}
+			.gallery-image {
+				width: 100%;
+				max-width: 100%;
 				border: 1px solid #ddd;
 				border-radius: 8px;
 				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+				display: block;
 			}
 			.download-button {
 				display: block;
@@ -86,7 +93,12 @@
 					<div class="inner">
 						<div class="pdf-container">
 						<h1 class="event-title">Upcoming Event</h1>
-						<iframe src="../images/bro.pdf#toolbar=0&navpanes=0" class="pdf-viewer"></iframe>
+						<div class="image-gallery">
+							<img src="../images/upevent/1.png" alt="Event Image 1" class="gallery-image">
+							<img src="../images/upevent/2.png" alt="Event Image 2" class="gallery-image">
+							<img src="../images/upevent/3.png" alt="Event Image 3" class="gallery-image">
+							<img src="../images/upevent/4.png" alt="Event Image 4" class="gallery-image">
+						</div>
 						<button class="download-button" onclick="downloadPDF()">⬇ Download PDF</button>
 						</div>
 					</div>
@@ -115,11 +127,13 @@
 											<dl class="contact">
 												<dt>Address</dt>
 												<dd>
-													Hemchandra Goswami Foundation<br />
-													Assam, India
+													Pandit Hemchandra Goswami Foundation<br />
+													HCG Road, Uzanbazar<br />
+													House no: 1<br />
+													Pin - 781001
 												</dd>
 												<dt>Phone</dt>
-												<dd><a href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a></dd>
+												<dd><a href="tel:+918761918918">+91 87619 18918</a></dd>
 												<dt>Email</dt>
 												<dd><a href="mailto:hemchnadrafoundation@gmail.com">hemchnadrafoundation@gmail.com</a></dd>
 											</dl>

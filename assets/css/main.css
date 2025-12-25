@@ -93,6 +93,7 @@ input, select, textarea {
 
 	body {
 		background: #303238 url("images/bg01.png");
+		background-attachment: fixed;
 	}
 
 		body.is-preload * {
@@ -1861,8 +1862,8 @@ input, select, textarea {
 
 		#banner p {
 			text-transform: uppercase;
-			color: #fff;
-			color: rgb(255, 255, 255);
+			color: #000;
+			color: rgb(0, 0, 0);
 			font-size: 1.5em;
 			font-weight: 700;
 			line-height: 1.3em;
@@ -1871,7 +1872,8 @@ input, select, textarea {
 			width: 100%;
 			line-height: 1.5em;
 			margin: 0;
-			text-shadow: #000000 2px 1px 2px;
+			font-style: italic;
+
 		}
 
 /* Sidebar */
@@ -2007,34 +2009,43 @@ input, select, textarea {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		flex-direction: column;
 		padding: 30px 0;
 		border-bottom: 2px solid rgb(255, 254, 254);
 		width: 100%;
 		position: relative;
-		background: url('/assets/css/images/assam.png') center center/contain no-repeat;
-		background-size: contain;
-	}		#header .logo-container > div {
-			text-align: center;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-		}
+		background: transparent;
+	}
+
+	#header .logo-container > div {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+	}
 
 	#header .header-logo {
 		width: 100px;
 		height: 100px;
-		border-radius: 50%;
-		box-shadow: 0 4px 8px rgba(208, 7, 7, 0.3);
 		transition: transform 0.3s ease;
 		object-fit: cover;
 		display: block;
-		margin-bottom: 15px;
 	}
 		#header .header-logo:hover {
 			transform: scale(1.05);
 		}
+
+	#header .header-title::before {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 150px;
+		background: url('/assets/css/images/assam.png') center center/contain no-repeat;
+		background-size: contain;
+		margin-top: -50px;
+	}
 
 	#header .header-title {
 		color: #fff;
@@ -2045,7 +2056,7 @@ input, select, textarea {
 		width: 100%;
 		text-align: center;
 		font-style: normal;
-		font-family: 'windsor', sans-serif;
+		font-family: 'Copperplate Gothic', 'Copperplate', serif;
 		text-shadow: #ea1374 2px 2px 4px;
 	}		#header .inner {
 			background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
