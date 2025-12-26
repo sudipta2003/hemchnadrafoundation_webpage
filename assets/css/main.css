@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Caveat:wght@400;700&display=swap");
 @import url("fontawesome-all.min.css");
 
 /*
@@ -1822,17 +1822,20 @@ input, select, textarea {
 			text-shadow: #fffbfb 2px 1px 2px;
 			
 		}
-		#banner h2 {
+		#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
 			border: solid 1px rgba(255, 255, 255, 0.25);
 			border-left: 0;
 			border-right: 0;
 			color: #000000;
 			color: rgb(0, 0, 0);
-			font-size: 2.35em;
+			font-size: 1.6em;
 			font-weight: 700;
 			line-height: 1.3em;
 			margin: 0 0 1.5em 0;
 			font-style: BOLD;
+			font-family: 'Caveat', cursive;
+			font-weight: 700;
+
 		}
 
 			#banner h2 strong {
@@ -1864,15 +1867,20 @@ input, select, textarea {
 			text-transform: uppercase;
 			color: #000;
 			color: rgb(0, 0, 0);
-			font-size: 1.5em;
+			font-size: 1.3em;
 			font-weight: 700;
 			line-height: 1.3em;
 			letter-spacing: 0.04em;
+			font-family: 'Caveat', cursive;
 			text-align: center;
 			width: 100%;
 			line-height: 1.5em;
 			margin: 0;
 			font-style: italic;
+			background-color: rgba(255, 255, 255, 0.15);
+			padding: 20px 30px;
+			border-radius: 8px;
+			display: inline-block;
 
 		}
 
@@ -1955,7 +1963,6 @@ input, select, textarea {
 
 		.wrapper.style1 {
 			position: relative;
-			text-shadow: 1px 1px 0 #fff;
 			background-color: #fff;
 			background-image: url("images/bg03.png"), url("images/bg04.png"), url("images/bg02.png");
 			background-repeat: no-repeat, no-repeat, repeat;
@@ -1966,7 +1973,6 @@ input, select, textarea {
 
 		.wrapper.style3 {
 			position: relative;
-			text-shadow: 1px 1px 0 #fff;
 			background-color: #fff;
 			background-image: url("images/bg03.png"), url("images/bg02.png");
 			background-repeat: no-repeat, repeat;
@@ -2049,7 +2055,7 @@ input, select, textarea {
 
 	#header .header-title {
 		color: #fff;
-		font-size: 1.8em;
+		font-size: 2.5em;
 		margin: 0;
 		padding: 0;
 		font-weight: bold;
@@ -2138,7 +2144,11 @@ input, select, textarea {
 
 /* Large */
 
-	@media screen and (max-width: 1280px) {
+	@media screen and (min-width: 1281px) {
+		#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
+			font-size: 3.5em;
+		}
+	}
 
 		/* Basic */
 
@@ -2177,10 +2187,11 @@ input, select, textarea {
 				padding: 20PX 0;
 			}
 
-				#banner h2 {
-					font-size: 2.2em;
-					line-height: 1.3em;
+#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
+					font-size: 1.9em;
 					margin: 0 0 1em 0;
+					font-family: 'Caveat', cursive;
+					font-weight: 700;
 				}
 
 				#banner p {
@@ -2191,9 +2202,14 @@ input, select, textarea {
 					text-align: center;
 					width: 100%;
 					margin: 0 0 2em 0;
+					font-family: 'Caveat', cursive;
+					font-weight: 700;
+					background-color: rgba(255, 255, 255, 0.15);
+					padding: 20px 30px;
+					border-radius: 8px;
+					display: inline-block;
 				}
 
-	}
 
 /* Medium */
 
@@ -2628,8 +2644,10 @@ input, select, textarea {
 				padding: 40px 20px 40px 20px;
 			}
 
-				#banner h2 {
-					font-size: 18pt !important;
+				#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
+				font-size: 18pt !important;
+					font-weight: 700 !important;
+					font-style: bold !important;
 				}
 
 		/* Sidebar */
