@@ -12,6 +12,39 @@
 			html {
 				scroll-behavior: smooth;
 			}
+			/* Running text (marquee) above About section */
+			.running-text {
+				width: 100%;
+				overflow: hidden;
+				white-space: nowrap;
+				margin: 0 auto 12px auto;
+				background: rgba(255, 255, 255, 0.3);
+				border: 1px solid rgba(0, 0, 0, 0.15);
+				border-radius: 10px;
+				padding: 0 14px;
+			}
+			.running-text__inner {
+				display: inline-block;
+				padding-left: 100%;
+				animation: runningTextMarquee 18s linear infinite;
+			}
+			.running-text__inner span {
+				display: inline-block;
+				padding: 6px 0;
+				font-weight: 700;
+				color: #000;
+				letter-spacing: 0.2px;
+			}
+			@keyframes runningTextMarquee {
+				0% { transform: translateX(0); }
+				100% { transform: translateX(-100%); }
+			}
+			@media (prefers-reduced-motion: reduce) {
+				.running-text__inner {
+					animation: none;
+					padding-left: 0;
+				}
+			}
 			@keyframes slideInFromLeft {
 				from {
 					opacity: 0;
@@ -343,6 +376,14 @@
 
 						<!-- Banner -->
 							<div id="banner">
+								<div class="running-text" aria-label="Announcement">
+									<div class="running-text__inner">
+										<span>Upcoming event: Language & Legacy
+												A ceremony to commemorate the Birth Anniversary of
+												Pandit Hemchandra Goswami, Venue: India International Centre, 
+												New Delhi 9 january 2026 | 3:00pm - 5:00pm</span>
+									</div>
+								</div>
 			
 								<h2 style="font-family: 'Copperplate Gothic', 'Copperplate', serif;">About the Foundation</h2>
 								
@@ -351,7 +392,7 @@
 									<img src="images/him.JPG" alt="Pandit Hemchandra Goswami" style="max-width: 220px; height: auto; border-radius: 8px;">
 								</div>
 								
-								<p>The Hemchandra Goswami Foundation is dedicated to preserving, 
+								<p style="font-family: 'Copperplate Gothic', 'Copperplate', serif;" style="font-size: small;">The Hemchandra Goswami Foundation is dedicated to preserving, 
 									celebrating, and advancing the legacy of one of Assam's
     								greatest scholars, thinkers, and cultural visionaries</p>
 								<p><a href="/about/about.html" style="color: rgba(0, 0, 0, 0.896); transition: color 0.3s ease; font-size: 0.95em;" onmouseover="this.style.color='rgba(5, 212, 231, 0.896)'" onmouseout="this.style.color='rgba(0,0,0,0.896)'">LEARN MORE ABOUT OUR VALUES....</a></p>
@@ -671,30 +712,67 @@
 
 			<!-- Event Popup Script -->
 			<script>
+				const UPCOMING_EVENT_PAGE_VISITED_SESSION_KEY = 'hcg_upcoming_event_page_visited_session_v1';
+
+				function hasVisitedUpcomingEventPageThisSession() {
+					try {
+						return sessionStorage.getItem(UPCOMING_EVENT_PAGE_VISITED_SESSION_KEY) === '1';
+					} catch (e) {
+						return false;
+					}
+				}
+
+				function markUpcomingEventPageVisitedThisSession() {
+					try {
+						sessionStorage.setItem(UPCOMING_EVENT_PAGE_VISITED_SESSION_KEY, '1');
+					} catch (e) {
+						// ignore
+					}
+				}
+
 				function showEventPopup() {
 					const popup = document.getElementById('eventPopup');
+					if (!popup) return;
 					popup.classList.add('show');
 				}
 
 				function closeEventPopup() {
 					const popup = document.getElementById('eventPopup');
+					if (!popup) return;
 					popup.classList.remove('show');
 				}
 
-				// Show popup on page load (every time page loads/refreshes)
+				// Keep showing the popup until the user visits the Upcoming Event page.
+				// Session resets when the user closes the tab/browser.
 				window.addEventListener('load', function() {
-					showEventPopup();
-				});
-
-				// Close popup when clicking the X button
-				document.querySelector('.event-popup-close').addEventListener('click', closeEventPopup);
-
-				// Close popup when clicking outside the content
-				document.getElementById('eventPopup').addEventListener('click', function(e) {
-					if (e.target === this) {
-						closeEventPopup();
+					if (!hasVisitedUpcomingEventPageThisSession()) {
+						showEventPopup();
 					}
 				});
+
+				// If user clicks Learn More, mark as visited before navigation.
+				const learnMoreLink = document.querySelector('.event-popup-button');
+				if (learnMoreLink) {
+					learnMoreLink.addEventListener('click', function() {
+						markUpcomingEventPageVisitedThisSession();
+					});
+				}
+
+				// Close popup when clicking the X button
+				const closeButton = document.querySelector('.event-popup-close');
+				if (closeButton) {
+					closeButton.addEventListener('click', closeEventPopup);
+				}
+
+				// Close popup when clicking outside the content
+				const popup = document.getElementById('eventPopup');
+				if (popup) {
+					popup.addEventListener('click', function(e) {
+						if (e.target === this) {
+							closeEventPopup();
+						}
+					});
+				}
 
 				// Close popup with Escape key
 				document.addEventListener('keydown', function(e) {

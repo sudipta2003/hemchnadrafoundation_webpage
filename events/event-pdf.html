@@ -172,5 +172,16 @@
 				document.body.removeChild(link);
 			}
 		</script>
+		<script>
+			// Visiting this page should stop the homepage popup from appearing again.
+			(function () {
+				const key = 'hcg_upcoming_event_page_visited_session_v1';
+				try {
+					sessionStorage.setItem(key, '1');
+				} catch (e) {
+					// ignore
+				}
+			})();
+		</script>
 	</body>
 </html>
