@@ -42,7 +42,7 @@ function renderPhotosCarousel(shouldAnimate = false) {
 	}
 
 	if (!allPhotos.length) {
-		articleList.innerHTML = '<h2 class="icon fa-file-alt" style="text-align: center;">Recent Activity</h2><p>No photos found.</p>';
+		articleList.innerHTML = '<h2 style="text-align: center; font-family: \'Copperplate Gothic\', \'Copperplate\', serif;">Recent Activity</h2><p>No photos found.</p>';
 		return;
 	}
 
@@ -64,7 +64,7 @@ function renderPhotosCarousel(shouldAnimate = false) {
 	
 	function renderNewPhotos() {
 		// Build HTML for the heading
-		let articlesHTML = '<h2 class="icon fa-file-alt" style="text-align: center;">Recent Activity</h2>';
+		let articlesHTML = '<h2 style="text-align: center; font-family: \'Copperplate Gothic\', \'Copperplate\', serif;">Recent Activity</h2>';
 		
 		// Get 3 photos starting from currentPhotoIndex
 		for (let i = 0; i < PHOTOS_PER_PAGE; i++) {

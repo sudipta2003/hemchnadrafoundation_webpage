@@ -1828,14 +1828,23 @@ input, select, textarea {
 			border-right: 0;
 			color: #000000;
 			color: rgb(0, 0, 0);
-			font-size: 1.6em;
+			font-size: 2.3em;
 			font-weight: 700;
 			line-height: 1.3em;
-			margin: 0 0 1.5em 0;
 			font-style: BOLD;
-			font-family: 'Caveat', cursive;
+			font-family: 'Copperplate Gothic', 'Copperplate', serif;
+			
+			text-transform: uppercase;
+			font-family: 'Roboto';
 			font-weight: 700;
 
+		}
+
+		/* Slightly smaller banner title across screens */
+		#banner h2 {
+			font-size: 2.3em;
+			line-height: 1.25em;
+			font-style: bold;
 		}
 
 			#banner h2 strong {
@@ -2146,7 +2155,11 @@ input, select, textarea {
 
 	@media screen and (min-width: 1281px) {
 		#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
-			font-size: 3.5em;
+			font-size: 3.2em;
+		}
+
+		#banner h2 {
+			font-size: 3.2em;
 		}
 	}
 
@@ -2187,11 +2200,15 @@ input, select, textarea {
 				padding: 20PX 0;
 			}
 
-#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
-					font-size: 1.9em;
+			#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
+				font-size: 1.75em;
 					margin: 0 0 1em 0;
 					font-family: 'Caveat', cursive;
 					font-weight: 700;
+				}
+
+				#banner h2 {
+					font-size: 1.75em;
 				}
 
 				#banner p {
@@ -2376,19 +2393,7 @@ input, select, textarea {
 					font-weight: 700;
 					font-size: 0.95em;
 					letter-spacing: 0.075em;
-				}
-
-					#navPanel .link:first-child {
-						border-top: 0;
-					}
-
-					#navPanel .link:last-child {
-						border-bottom: 0;
-					}
-
-				#navPanel .indent-1 {
-					display: inline-block;
-					width: 1em;
+				text-align: center;
 				}
 
 				#navPanel .indent-2 {
@@ -2419,7 +2424,7 @@ input, select, textarea {
 				-moz-transform: translateX(275px);
 				-webkit-transform: translateX(275px);
 				-ms-transform: translateX(275px);
-				transform: translateX(275px);
+	transform: translateX(275px);
 			}
 
 			body.navPanel-visible #navPanel {
@@ -2484,7 +2489,7 @@ input, select, textarea {
 			}
 
 		#header .header-title {
-			font-size: 1.5em;
+			font-size: 2em;
 			margin: 0;
 		}			#header .inner {
 				display: none !important;
@@ -2644,10 +2649,18 @@ input, select, textarea {
 				padding: 40px 20px 40px 20px;
 			}
 
+			#header .header-title {
+				font-size: 1.8em;
+			}
+
 				#banner h2, .box.feature1 header.first h2, .box.article-list h2, header.major h2 {
-				font-size: 18pt !important;
+					font-size: 15pt !important;
 					font-weight: 700 !important;
 					font-style: bold !important;
+				}
+
+				#banner h2 {
+					font-size: 15pt !important;
 				}
 
 		/* Sidebar */
